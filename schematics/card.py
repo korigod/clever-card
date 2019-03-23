@@ -1,7 +1,7 @@
 import skidl as sk
 import os
 import sys
-from skidl import generate_netlist, Net, Part, subcircuit, TEMPLATE
+from skidl import Bus, generate_netlist, Net, Part, subcircuit, TEMPLATE
 
 
 sk.lib_search_paths[sk.KICAD].extend([
@@ -58,17 +58,39 @@ def efm_power(efm, vdd, gnd):
     )
 
 
-vdd = Net('VDD')
-gnd = Net('GND')
+def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
+    total_leds = 0
+    for anode_string in anodes:
+        cathodes_iterator = iter(cathodes)
+
+        for first_cathode_string, second_cathode_string in zip(
+            cathodes_iterator, cathodes_iterator
+        ):
+            led = led_template()
+            led['A1'] += anode_string
+            led['A2'] += anode_string
+            led['K1'] += first_cathode_string
+            led['K2'] += second_cathode_string
+
+            total_leds += 1
+            if total_leds == led_count:
+                return
+
 
 coin_battery = Part('Device', 'Battery_Cell', footprint='Battery_Holders:3028')
 mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x10mm_P0.5mm')
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
-leds = 49 * Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
+led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
 
+vdd = Net('VDD')
+gnd = Net('GND')
 coin_battery['+'] += vdd
 coin_battery['-'] += gnd
 
 efm_power(mcu, vdd, gnd)
+
+led_anode_strings = Bus('LED_A', 10)
+led_cathode_strings = Bus('LED_K', 10)
+bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
 
 generate_netlist()
