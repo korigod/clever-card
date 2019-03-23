@@ -26,15 +26,19 @@ class Res(Part):
         )
 
 
-def efm_decouple(efm, vdd, gnd):
+def efm_power(efm, vdd, gnd):
+    efm['VSS'] += gnd
+
     efm['DECOUPLE'] & Cap('1uF', 'C_0603') & gnd
 
     for pin in efm['IOVDD_[0-9]+']:
+        pin += vdd
         vdd & Cap('0.1uF', 'C_0603', description=f'{pin} decoupling cap') & gnd
     vdd & Cap('10uF', 'C_0603', description=f'IOVDD decoupling cap') & gnd
 
     avdd = Net('MCU_AVDD')
     for pin in efm['AVDD_[0-9]+']:
+        pin += avdd
         avdd & Cap('10nF', 'C_0603', description=f'{pin} decoupling cap') & gnd
     avdd & Cap('10uF', 'C_0603', description=f'AVDD decoupling cap') & gnd
     (
@@ -44,6 +48,7 @@ def efm_decouple(efm, vdd, gnd):
         avdd
     )
 
+    efm['VDD_DREG'] += vdd
     (
         vdd & (
             Cap('0.1uF', description='VDD decoupling cap') |
@@ -64,7 +69,6 @@ leds = 49 * Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
 coin_battery['+'] += vdd
 coin_battery['-'] += gnd
 
-efm_decouple(mcu, vdd, gnd)
-mcu['VSS'] += gnd
+efm_power(mcu, vdd, gnd)
 
 generate_netlist()
