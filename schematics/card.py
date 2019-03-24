@@ -1,7 +1,7 @@
 import skidl as sk
 import os
 import sys
-from skidl import Bus, generate_netlist, Net, Part, subcircuit, TEMPLATE
+from skidl import Bus, ERC, generate_netlist, Net, Part, POWER, subcircuit, TEMPLATE
 
 from touch_sense_sklib import touch_sense_lib
 
@@ -32,6 +32,7 @@ def efm_power(efm, vdd, gnd):
     efm['VSS'] += gnd
 
     efm['DECOUPLE'] & Cap('1uF', 'C_0603') & gnd
+    efm['DECOUPLE'].drive = POWER
 
     for pin in efm['IOVDD_[0-9]+']:
         pin += vdd
@@ -124,6 +125,8 @@ vdd = Net('VDD')
 gnd = Net('GND')
 coin_battery['+'] += vdd
 coin_battery['-'] += gnd
+coin_battery['+'].drive = POWER
+coin_battery['-'].drive = POWER
 
 efm_power(mcu, vdd, gnd)
 efm_lfxo(mcu, lfxo)
@@ -136,4 +139,5 @@ led_cathode_strings = Bus('LED_K', 12)
 led_cathode_strings += mcu['PF[2-5]/, PE[8:15]']
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
 
+ERC()
 generate_netlist()
