@@ -60,6 +60,16 @@ def efm_power(efm, vdd, gnd):
     )
 
 
+def imu_power(lsm6ds3, vdd, gnd):
+    lsm6ds3['GND'] += gnd
+
+    lsm6ds3['VDD'] += vdd
+    lsm6ds3['VDD'] & Cap('0.1uF', description='LSM6DS3 VDD decoupling cap') & gnd
+
+    lsm6ds3['VDDIO'] += vdd
+    lsm6ds3['VDDIO'] & Cap('0.1uF', description='LSM6DS3 VDDIO decoupling cap') & gnd
+
+
 def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
     total_leds = 0
     for anode_string in anodes:
@@ -101,5 +111,7 @@ efm_power(mcu, vdd, gnd)
 led_anode_strings = Bus('LED_A', 10)
 led_cathode_strings = Bus('LED_K', 10)
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
+
+imu_power(imu, vdd, gnd)
 
 generate_netlist()
