@@ -3,6 +3,8 @@ import os
 import sys
 from skidl import Bus, generate_netlist, Net, Part, subcircuit, TEMPLATE
 
+from touch_sense_sklib import touch_sense_lib
+
 
 sk.lib_search_paths[sk.KICAD].extend([
     '/usr/share/kicad/library',
@@ -86,6 +88,8 @@ coin_battery = Part('Device', 'Battery_Cell', footprint='Battery_Holders:3028')
 mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x10mm_P0.5mm')
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
+touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='TouchSense_Pad_D8.0mm')
+touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='TouchSense_Slider_4Pads_50x5mm')
 
 vdd = Net('VDD')
 gnd = Net('GND')
