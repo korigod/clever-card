@@ -76,6 +76,11 @@ def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
             if total_leds == led_count:
                 return
 
+    if led_count is not None and total_leds < led_count:
+        raise Exception(
+            'Number of anode and cathode strings is not enough for specified LED count.'
+        )
+
 
 coin_battery = Part('Device', 'Battery_Cell', footprint='Battery_Holders:3028')
 mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x10mm_P0.5mm')
