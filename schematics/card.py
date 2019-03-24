@@ -80,8 +80,8 @@ def mcu_imu_spi(efm32xx232, lsm6ds3):
     lsm6ds3['SCL'] += efm32xx232['US1_CLK_#1']
     lsm6ds3['CS'] += efm32xx232['US1_CS_#1']
 
-    lsm6ds3['INT1'] += efm32xx232['PD4']
-    lsm6ds3['INT2'] += efm32xx232['PD5']
+    lsm6ds3['INT1'] += efm32xx232['PB13']
+    lsm6ds3['INT2'] += efm32xx232['PB14']
 
     # Unused I2C master for additional sensors
     lsm6ds3['SDX'] += gnd
@@ -130,8 +130,8 @@ efm_lfxo(mcu, lfxo)
 imu_power(imu, vdd, gnd)
 mcu_imu_spi(mcu, imu)
 
-led_anode_strings = Bus('LED_A', 10)
-led_cathode_strings = Bus('LED_K', 10)
+led_anode_strings = Bus('LED_A', 9)
+led_cathode_strings = Bus('LED_K', 12)
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
 
 generate_netlist()
