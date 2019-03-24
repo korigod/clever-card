@@ -131,7 +131,9 @@ imu_power(imu, vdd, gnd)
 mcu_imu_spi(mcu, imu)
 
 led_anode_strings = Bus('LED_A', 9)
+led_anode_strings += mcu['PA[0-5]/, PA[8:10]']
 led_cathode_strings = Bus('LED_K', 12)
+led_cathode_strings += mcu['PF[2-5]/, PE[8:15]']
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
 
 generate_netlist()
