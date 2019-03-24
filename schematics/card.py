@@ -74,6 +74,20 @@ def imu_power(lsm6ds3, vdd, gnd):
     lsm6ds3['VDDIO'] & Cap('0.1uF', description='LSM6DS3 VDDIO decoupling cap') & gnd
 
 
+def mcu_imu_spi(efm32xx232, lsm6ds3):
+    lsm6ds3['SDO'] += efm32xx232['US1_RX_#1']
+    lsm6ds3['SDA'] += efm32xx232['US1_TX_#1']
+    lsm6ds3['SCL'] += efm32xx232['US1_CLK_#1']
+    lsm6ds3['CS'] += efm32xx232['US1_CS_#1']
+
+    lsm6ds3['INT1'] += efm32xx232['PD4']
+    lsm6ds3['INT2'] += efm32xx232['PD5']
+
+    # Unused I2C master for additional sensors
+    lsm6ds3['SDX'] += gnd
+    lsm6ds3['SCX'] += gnd
+
+
 def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
     total_leds = 0
     for anode_string in anodes:
@@ -113,11 +127,11 @@ coin_battery['-'] += gnd
 
 efm_power(mcu, vdd, gnd)
 efm_lfxo(mcu, lfxo)
+imu_power(imu, vdd, gnd)
+mcu_imu_spi(mcu, imu)
 
 led_anode_strings = Bus('LED_A', 10)
 led_cathode_strings = Bus('LED_K', 10)
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
-
-imu_power(imu, vdd, gnd)
 
 generate_netlist()
