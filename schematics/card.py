@@ -60,6 +60,10 @@ def efm_power(efm, vdd, gnd):
     )
 
 
+def efm_lfxo(efm32, crystal):
+    efm32['LFXTAL_P'] & crystal & efm32['LFXTAL_N']
+
+
 def imu_power(lsm6ds3, vdd, gnd):
     lsm6ds3['GND'] += gnd
 
@@ -96,6 +100,7 @@ def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
 
 coin_battery = Part('Device', 'Battery_Cell', footprint='Battery_Holders:3028')
 mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x10mm_P0.5mm')
+lfxo = Part('Device', 'Crystal', value='32768Hz')
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
 touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='TouchSense_Pad_D8.0mm')
@@ -107,6 +112,7 @@ coin_battery['+'] += vdd
 coin_battery['-'] += gnd
 
 efm_power(mcu, vdd, gnd)
+efm_lfxo(mcu, lfxo)
 
 led_anode_strings = Bus('LED_A', 10)
 led_cathode_strings = Bus('LED_K', 10)
