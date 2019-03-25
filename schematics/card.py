@@ -3,6 +3,7 @@ import os
 import sys
 from skidl import Bus, ERC, generate_netlist, Net, Part, POWER, subcircuit, TEMPLATE
 
+from pogo_pads_sklib import pogo_pads_lib
 from touch_sense_sklib import touch_sense_lib
 
 
@@ -60,6 +61,20 @@ def efm_power(efm, vdd, gnd):
             Cap('100uF', description='VDD decoupling cap')
         ) & gnd
     )
+
+
+def efm_debugging_interface(efm32xx232, connector_10_pins, vdd, gnd):
+    # Pinout is compatible with EFM Mini Simplicity Connector
+    connector_10_pins[1] += vdd
+    connector_10_pins[2] += gnd
+    connector_10_pins[3] += mcu['RESET']
+    connector_10_pins[4] += mcu['US0_RX_#5']
+    connector_10_pins[5] += mcu['US0_TX_#5']
+    connector_10_pins[6] += mcu['DBG_SWO_#1']
+    connector_10_pins[7] += mcu['DBG_SWDIO']
+    connector_10_pins[8] += mcu['DBG_SWCLK']
+    connector_10_pins[9] += mcu['ETM_TCLK_#0']
+    connector_10_pins[10] += mcu['ETM_TD0_#0']
 
 
 def efm_lfxo(efm32, crystal):
@@ -121,6 +136,7 @@ imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
 touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='TouchSense_Pad_D8.0mm')
 touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='TouchSense_Slider_4Pads_50x5mm')
+pogo_pads = Part(pogo_pads_lib, 'POGO_10PADS', footprint='')
 
 vdd = Net('VDD')
 gnd = Net('GND')
@@ -130,6 +146,7 @@ coin_battery['+'].drive = POWER
 coin_battery['-'].drive = POWER
 
 efm_power(mcu, vdd, gnd)
+efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
 efm_lfxo(mcu, lfxo)
 imu_power(imu, vdd, gnd)
 mcu_imu_spi(mcu, imu)
