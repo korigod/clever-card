@@ -129,7 +129,7 @@ def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
         )
 
 
-coin_battery = Part('Device', 'Battery_Cell', footprint='Battery_Holders:3028')
+coin_battery = Part('Device', 'Battery_Cell', footprint='Battery:BatteryHolder_Keystone_3034_1x20mm')
 mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x10mm_P0.5mm')
 lfxo = Part('Device', 'Crystal', value='32768Hz', footprint='Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm')
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
