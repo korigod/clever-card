@@ -40,6 +40,7 @@ def efm_power(efm, vdd, gnd):
     vdd & Cap('10uF', 'C_0603', description=f'IOVDD decoupling cap') & gnd
 
     avdd = Net('MCU_AVDD')
+    avdd.drive = POWER
     for pin in efm['AVDD_[0-9]+']:
         pin += avdd
         avdd & Cap('10nF', 'C_0603', description=f'{pin} decoupling cap') & gnd
