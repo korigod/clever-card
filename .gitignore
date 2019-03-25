@@ -1,3 +1,7 @@
+*.py[cod]
+
+.vscode
+
 # SKiDL output
 *.erc
 *.log
