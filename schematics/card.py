@@ -14,7 +14,7 @@ sk.lib_search_paths[sk.KICAD].extend([
 
 
 class Cap(Part):
-    def __init__(self, capacitance: str = '0.1uF', footprint: str = 'C_0603', *args, **kwargs):
+    def __init__(self, capacitance: str = '0.1uF', footprint: str = 'C_0603_1608Metric', *args, **kwargs):
         footprint_name = footprint if ':' in footprint else f'Capacitor_SMD:{footprint}'
         super().__init__(
             'Device', 'C', value=capacitance, footprint=footprint_name, *args, **kwargs
@@ -32,20 +32,20 @@ class Res(Part):
 def efm_power(efm, vdd, gnd):
     efm['VSS'] += gnd
 
-    efm['DECOUPLE'] & Cap('1uF', 'C_0603') & gnd
+    efm['DECOUPLE'] & Cap('1uF', 'C_0603_1608Metric') & gnd
     efm['DECOUPLE'].drive = POWER
 
     for pin in efm['IOVDD_[0-9]+']:
         pin += vdd
-        vdd & Cap('0.1uF', 'C_0603', description=f'{pin} decoupling cap') & gnd
-    vdd & Cap('10uF', 'C_0603', description=f'IOVDD decoupling cap') & gnd
+        vdd & Cap('0.1uF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
+    vdd & Cap('10uF', 'C_0603_1608Metric', description=f'IOVDD decoupling cap') & gnd
 
     avdd = Net('MCU_AVDD')
     avdd.drive = POWER
     for pin in efm['AVDD_[0-9]+']:
         pin += avdd
-        avdd & Cap('10nF', 'C_0603', description=f'{pin} decoupling cap') & gnd
-    avdd & Cap('10uF', 'C_0603', description=f'AVDD decoupling cap') & gnd
+        avdd & Cap('10nF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
+    avdd & Cap('10uF', 'C_0603_1608Metric', description=f'AVDD decoupling cap') & gnd
     (
         vdd &
         Part('Device', 'Ferrite_Bead_Small', footprint='Inductor_SMD:L_0603_1608Metric') &
