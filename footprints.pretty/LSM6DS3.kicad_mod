@@ -1,6 +1,6 @@
-(module LSM6DS3:PQFN50P300X250X86-14N (layer F.Cu) (tedit 0)
+(module LSM6DS3:LSM6DS3 (layer F.Cu) (tedit 0)
   (attr smd)
-  (fp_text reference PQFN50P300X250X86-14N (at -0.31031 -2.48754) (layer F.SilkS)
+  (fp_text reference LSM6DS3 (at -0.31031 -2.48754) (layer F.SilkS)
     (effects (font (size 1.00102 1.00102) (thickness 0.05)))
   )
   (fp_text value VAL** (at 0.325055 2.39047) (layer F.SilkS)
