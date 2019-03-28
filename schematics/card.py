@@ -135,7 +135,7 @@ lfxo = Part('Device', 'Crystal', value='32768Hz', footprint='Crystal:Crystal_SMD
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='LSM6D3:LSM6D3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='LED_DUAL_0606')
 touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='TouchSense_Pad_D8.0mm')
-touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='TouchSense_Slider_4Pads_50x5mm')
+touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='footprints:TouchSlider-4_50x8mm')
 pogo_pads = Part(pogo_pads_lib, 'POGO_10PADS', footprint='')
 
 vdd = Net('VDD')
