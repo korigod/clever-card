@@ -6,3 +6,6 @@
 *.erc
 *.log
 *.net
+
+*bak
+_autosave*
