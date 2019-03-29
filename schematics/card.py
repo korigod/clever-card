@@ -81,6 +81,17 @@ def efm_lfxo(efm32, crystal):
     efm32['LFXTAL_P'] & crystal & efm32['LFXTAL_N']
 
 
+def efm_handle_unused_pins(efm32xx232, gnd):
+    for spare_pin in efm32xx232['PC[4-5]/']:
+        spare_pin & Res('0') & gnd
+
+    unused_pins = [pin for pin in efm32xx232 if not pin.nets]
+    for pin in unused_pins:
+        pin += gnd
+
+    return unused_pins
+
+
 def imu_power(lsm6ds3, vdd, gnd):
     lsm6ds3['GND'] += gnd
 
@@ -148,6 +159,7 @@ coin_battery['-'].drive = POWER
 efm_power(mcu, vdd, gnd)
 efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
 efm_lfxo(mcu, lfxo)
+
 imu_power(imu, vdd, gnd)
 mcu_imu_spi(mcu, imu)
 
@@ -160,6 +172,11 @@ bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_cou
 touch_pad_lines = Bus('TOUCH_PAD', [pad[1] for pad in touch_pads])
 touch_pad_lines += mcu['PC(6|8|9|10)']
 touch_slider[:] += mcu['PC[11:14]']
+
+grounded_unused_pins = efm_handle_unused_pins(mcu, gnd)
+print('These {} unused pins were connected to ground:\n{}'.format(
+    len(grounded_unused_pins), '\n'.join([str(pin) for pin in grounded_unused_pins])
+))
 
 ERC()
 generate_netlist()
