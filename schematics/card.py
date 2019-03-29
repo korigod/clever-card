@@ -145,7 +145,7 @@ mcu = Part('EFM32LG232F64', 'EFM32LG232F64', footprint='Package_QFP:LQFP-64_10x1
 lfxo = Part('Device', 'Crystal', value='32768Hz', footprint='Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm')
 imu = Part('Sensor_Motion', 'LSM6DS3', footprint='footprints:LSM6DS3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='footprints:LED_DUAL_0606')
-touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='TouchSense_Pad_D8.0mm')
+touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='footprints:TouchPad_D8.0mm')
 touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='footprints:TouchSlider-4_50x8mm')
 pogo_pads = Part(pogo_pads_lib, 'POGO_10PADS', footprint='')
 
