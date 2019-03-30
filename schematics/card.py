@@ -147,7 +147,7 @@ imu = Part('Sensor_Motion', 'LSM6DS3', footprint='footprints:LSM6DS3')
 led_template = Part('Device', 'LED_DUAL_AACC', TEMPLATE, footprint='footprints:LED_DUAL_0606')
 touch_pads = 4 * Part(touch_sense_lib, 'TOUCH_PAD', TEMPLATE, footprint='footprints:TouchPad_D8.0mm')
 touch_slider = Part(touch_sense_lib, 'TOUCH_SLIDER_4PADS', footprint='footprints:TouchSlider-4_40x7mm')
-pogo_pads = Part(pogo_pads_lib, 'POGO_10PADS', footprint='')
+pogo_pads = Part(pogo_pads_lib, 'POGO_10PADS', footprint='footprints:TestPoints_2x05_P2.54_D1.7')
 
 vdd = Net('VDD')
 gnd = Net('GND')
