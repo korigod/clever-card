@@ -1,10 +1,7 @@
 import math
-from matplotlib import pyplot as plt
-
-from tkinter import Tk, Scale, Button, mainloop, HORIZONTAL
 
 
-def draw(LINEAR_LED_COUNT, LINEAR_RADIUS, CIRCULAR_SEGMENT_LED_COUNT, CIRCLULAR_TO_LINEAR_ANGLE):
+def generate(LINEAR_LED_COUNT, LINEAR_RADIUS, CIRCULAR_SEGMENT_LED_COUNT, CIRCLULAR_TO_LINEAR_ANGLE):
     # LINEAR_LED_COUNT = 9  # 7
     # LINEAR_RADIUS = 1
     # CIRCLULAR_TO_LINEAR_ANGLE = math.pi / 6  # 25 deg
@@ -38,30 +35,4 @@ def draw(LINEAR_LED_COUNT, LINEAR_RADIUS, CIRCULAR_SEGMENT_LED_COUNT, CIRCLULAR_
 
     all_leds = all_circular_segments_leds_flat + all_linear_leds
 
-    print(len(all_leds))
-
-    plt.plot([x for x, y in all_leds], [y for x, y in all_leds], 'go')
-    plt.axis('equal')
-    plt.show()
-
-
-def show_values():
-    draw(w1.get(), w2.get(), w3.get(), w4.get() / 180 * math.pi)
-
-
-master = Tk()
-w1 = Scale(master, from_=1, to=21, orient=HORIZONTAL)
-w1.set(9)
-w1.pack()
-w2 = Scale(master, from_=1, to=2, orient=HORIZONTAL)
-w2.set(1)
-w2.pack()
-w3 = Scale(master, from_=1, to=21, orient=HORIZONTAL)
-w3.set(8)
-w3.pack()
-w4 = Scale(master, from_=0, to=130, orient=HORIZONTAL)
-w4.set(30)
-w4.pack()
-Button(master, text='Show', command=show_values).pack()
-
-mainloop()
+    return all_leds
