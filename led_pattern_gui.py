@@ -2,7 +2,7 @@ import math
 from tkinter import Tk, Scale, Button, mainloop, HORIZONTAL
 from matplotlib import pyplot as plt
 
-from led_pattern_gen import generate
+from led_pattern import generate
 
 
 def show_values():
