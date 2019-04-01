@@ -1,10 +1,12 @@
 from math import cos, pi, sin, sqrt
+from itertools import chain
 
 
 def generate(linear_led_count, linear_radius, circular_segment_led_count, circular_to_linear_angle):
-    linear_leds = [
-        -linear_radius + i * (2 * linear_radius / (linear_led_count - 1))
-        for i in range(linear_led_count)
+    assert(linear_led_count % 2 == 1)
+    linear_led_segment = [
+        i * (2 * linear_radius / (linear_led_count - 1))
+        for i in range(1, linear_led_count // 2 + 1)
     ]
 
     circular_segment_angular_size = pi * 3 / 2 - 2 * circular_to_linear_angle
@@ -36,8 +38,12 @@ def generate(linear_led_count, linear_radius, circular_segment_led_count, circul
 
     all_circular_segments_leds_flat = [i for sublist in zip(*all_circular_segments_leds) for i in sublist]
 
-    all_linear_leds = [(x, 0) for x in linear_leds] + [(0, y) for y in linear_leds if abs(y) > 1e-9]
+    # Linear LEDs are arranged in circular manner to simplify PCB layout
+    linear_leds_arranged = [[(a, 0), (0, a), (-a, 0), (0, -a)] for a in linear_led_segment]
+    linear_leds_flat = list(chain.from_iterable(linear_leds_arranged))
 
-    all_leds = all_circular_segments_leds_flat + all_linear_leds
+    central_led = (0, 0)
+
+    all_leds = linear_leds_flat + all_circular_segments_leds_flat + [central_led]
 
     return all_leds
