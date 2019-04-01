@@ -24,7 +24,7 @@ def generate(linear_led_count, linear_radius, circular_segment_led_count, circul
             )
         )
 
-        arc_circle_center_shift = 1 - circular_segment_radius * cos(
+        arc_circle_center_shift = linear_radius - circular_segment_radius * cos(
             pi / 4 - circular_segment_angular_size / 2
         )
 
