@@ -34,9 +34,8 @@ def generate(linear_led_count, linear_radius, circular_segment_led_count, circul
             (arc_point_x + arc_circle_center_shift, arc_point_y + arc_circle_center_shift)
         )
 
-    all_circular_segments_leds = [[(x, y), (-x, y), (-x, -y), (x, -y)] for x, y in circular_segment_leds]
-
-    all_circular_segments_leds_flat = [i for sublist in zip(*all_circular_segments_leds) for i in sublist]
+    all_circular_segments_leds = [[(x, y), (-y, x), (-x, -y), (y, -x)] for x, y in circular_segment_leds]
+    all_circular_segments_leds_flat = list(chain.from_iterable(all_circular_segments_leds))
 
     # Linear LEDs are arranged in circular manner to simplify PCB layout
     linear_leds_arranged = [[(a, 0), (0, a), (-a, 0), (0, -a)] for a in linear_led_segment]
