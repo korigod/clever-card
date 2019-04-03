@@ -104,6 +104,8 @@ def imu_power(lsm6ds3, vdd, gnd):
     lsm6ds3['VDDIO'] += vdd
     lsm6ds3['VDDIO'] & Cap('0.1uF', description='LSM6DS3 VDDIO decoupling cap') & gnd
 
+    lsm6ds3['VDD'] & Cap('10uF', description='LSM6DS3 VDD decoupling cap') & gnd
+
 
 def mcu_imu_spi(efm32xx232, lsm6ds3):
     lsm6ds3['SDO'] += efm32xx232['US1_RX_#1']
