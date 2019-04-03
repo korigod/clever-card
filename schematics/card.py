@@ -1,6 +1,7 @@
 import skidl as sk
 import os
 import sys
+from itertools import zip_longest
 from skidl import Bus, ERC, generate_netlist, Net, Part, POWER, subcircuit, TEMPLATE
 
 from pogo_pads_sklib import pogo_pads_lib
@@ -118,15 +119,34 @@ def mcu_imu_spi(efm32xx232, lsm6ds3):
 
 def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
     total_leds = 0
-    for anode_string in anodes:
-        cathodes_iterator = iter(cathodes)
+    unused_anode_strings = []
+    for cathode_index, cathode_string in enumerate(cathodes):
+        anodes_iterator = iter(anodes)
 
+        for first_anode_string, second_anode_string in zip(
+            anodes_iterator, anodes_iterator
+        ):
+            led = led_template()
+            led['K'] += cathode_string
+            if cathode_index < len(cathodes) / 2:
+                led['A1'] += first_anode_string
+                led['A2'] += second_anode_string
+            else:
+                led['A1'] += second_anode_string
+                led['A2'] += first_anode_string
+
+            total_leds += 1
+            if total_leds == led_count:
+                return
+
+    if len(anodes) % 2 == 1:
+        unused_anode_string = anodes[-1]
+        cathodes_iterator = iter(cathodes)
         for first_cathode_string, second_cathode_string in zip(
             cathodes_iterator, cathodes_iterator
         ):
             led = led_template()
-            led['A1'] += anode_string
-            led['A2'] += anode_string
+            led['A'] += unused_anode_string
             led['K1'] += first_cathode_string
             led['K2'] += second_cathode_string
 
