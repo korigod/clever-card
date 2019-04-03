@@ -78,8 +78,10 @@ def efm_debugging_interface(efm32xx232, connector_10_pins, vdd, gnd):
     connector_10_pins[10] += mcu['ETM_TD0_#0']
 
 
-def efm_lfxo(efm32, crystal):
+def efm_lfxo(efm32, crystal, gnd):
     efm32['LFXTAL_P'] & crystal & efm32['LFXTAL_N']
+    efm32['LFXTAL_P'] & Cap('22pF', description='32768 Hz crystal load capacitor') & gnd
+    efm32['LFXTAL_N'] & Cap('22pF', description='32768 Hz crystal load capacitor') & gnd
 
 
 def efm_handle_unused_pins(efm32xx232, gnd):
@@ -178,10 +180,11 @@ coin_battery['-'].drive = POWER
 
 efm_power(mcu, vdd, gnd)
 efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
-efm_lfxo(mcu, lfxo)
 
 imu_power(imu, vdd, gnd)
 mcu_imu_spi(mcu, imu)
+
+efm_lfxo(mcu, lfxo, gnd)
 
 led_anode_strings = Bus('LED_A', 9)
 led_anode_strings += mcu['PA[0-5]/, PA[8:10]']
