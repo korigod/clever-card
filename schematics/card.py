@@ -191,7 +191,7 @@ bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_cou
 
 touch_pad_lines = Bus('TOUCH_PAD', [pad[1] for pad in touch_pads])
 touch_pad_lines += mcu['PC(6|8|9|10)']
-touch_slider[:] += mcu['PC[11:14]']
+touch_slider[:] += mcu['PC[14:11]']
 
 grounded_unused_pins = efm_handle_unused_pins(mcu, gnd)
 print('These {} unused pins were connected to ground:\n{}'.format(
