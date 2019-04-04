@@ -76,13 +76,13 @@ def efm_lfxo(efm32, crystal, gnd):
     efm32['LFXTAL_N'] & Cap('22pF', description='32768 Hz crystal load capacitor') & gnd
 
 
-def efm_handle_unused_pins(efm32xx232, gnd):
+def efm_handle_unused_pins(efm32xx232, vdd, gnd):
     for spare_pin in efm32xx232['PC[4-5]/']:
         spare_pin & Res('0') & gnd
 
     unused_pins = [pin for pin in efm32xx232 if not pin.nets]
     for pin in unused_pins:
-        pin += gnd
+        pin += vdd
 
     return unused_pins
 
@@ -190,7 +190,7 @@ touch_pad_lines = Bus('TOUCH_PAD', [pad[1] for pad in touch_pads])
 touch_pad_lines += mcu['PC(6|8|9|10)']
 touch_slider[:] += mcu['PC[14:11]']
 
-grounded_unused_pins = efm_handle_unused_pins(mcu, gnd)
+grounded_unused_pins = efm_handle_unused_pins(mcu, vdd, gnd)
 print('These {} unused pins were connected to ground:\n{}'.format(
     len(grounded_unused_pins), '\n'.join([str(pin) for pin in grounded_unused_pins])
 ))
