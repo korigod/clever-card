@@ -71,6 +71,8 @@ def efm_debugging_interface(efm32xx232, connector_10_pins, vdd, gnd):
 
 
 def efm_lfxo(efm32, crystal, gnd):
+    efm32['LFXTAL_P'] += Net('LFXTAL_P')
+    efm32['LFXTAL_N'] += Net('LFXTAL_N')
     efm32['LFXTAL_P'] & crystal & efm32['LFXTAL_N']
     efm32['LFXTAL_P'] & Cap('22pF', description='32768 Hz crystal load capacitor') & gnd
     efm32['LFXTAL_N'] & Cap('22pF', description='32768 Hz crystal load capacitor') & gnd
