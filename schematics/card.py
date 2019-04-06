@@ -101,7 +101,7 @@ def imu_power(lsm6ds3, vdd, gnd):
     lsm6ds3['VDD'] & Cap('10uF', description='LSM6DS3 VDD decoupling cap') & gnd
 
 
-def mcu_imu_spi(efm32xx232, lsm6ds3):
+def mcu_imu_spi(efm32xx232, lsm6ds3, gnd):
     lsm6ds3['SDO'] += efm32xx232['US1_RX_#1']
     lsm6ds3['SDA'] += efm32xx232['US1_TX_#1']
     lsm6ds3['SCL'] += efm32xx232['US1_CLK_#1']
@@ -178,7 +178,7 @@ efm_power(mcu, vdd, gnd)
 efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
 
 imu_power(imu, vdd, gnd)
-mcu_imu_spi(mcu, imu)
+mcu_imu_spi(mcu, imu, gnd)
 
 efm_lfxo(mcu, lfxo, gnd)
 
