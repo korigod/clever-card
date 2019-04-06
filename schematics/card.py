@@ -89,13 +89,21 @@ def efm_handle_unused_pins(efm32xx232, vdd, gnd):
     return unused_pins
 
 
-def imu_power(lsm6ds3, vdd, gnd):
+def imu_power(lsm6ds3, power_mosfet_gate, vdd, gnd):
     lsm6ds3['GND'] += gnd
 
-    lsm6ds3['VDD'] += vdd
+    imu_vdd = Net('IMU_VDD')
+
+    imu_power_mosfet = Part('Device', 'Q_PMOS_GSD', footprint='Package_TO_SOT_SMD:SOT-23')
+    imu_power_mosfet['G'] += power_mosfet_gate
+    imu_power_mosfet['S'] += vdd
+    imu_power_mosfet['D'] += imu_vdd
+    imu_vdd.drive = POWER
+
+    lsm6ds3['VDD'] += imu_vdd
     lsm6ds3['VDD'] & Cap('0.1uF', description='LSM6DS3 VDD decoupling cap') & gnd
 
-    lsm6ds3['VDDIO'] += vdd
+    lsm6ds3['VDDIO'] += imu_vdd
     lsm6ds3['VDDIO'] & Cap('0.1uF', description='LSM6DS3 VDDIO decoupling cap') & gnd
 
     lsm6ds3['VDD'] & Cap('10uF', description='LSM6DS3 VDD decoupling cap') & gnd
@@ -177,7 +185,7 @@ coin_battery['-'].drive = POWER
 efm_power(mcu, vdd, gnd)
 efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
 
-imu_power(imu, vdd, gnd)
+imu_power(imu, mcu['PD4'], vdd, gnd)
 mcu_imu_spi(mcu, imu, gnd)
 
 efm_lfxo(mcu, lfxo, gnd)
