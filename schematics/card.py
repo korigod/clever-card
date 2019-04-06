@@ -189,8 +189,8 @@ led_cathode_strings += mcu['PE[8:15], PF[2-5]/']
 bicolor_led_matrix(led_template, led_anode_strings, led_cathode_strings, led_count=49)
 
 touch_pad_lines = Bus('TOUCH_PAD', [pad[1] for pad in touch_pads])
-touch_pad_lines += mcu['PC(6|8|9|10)']
-touch_slider[:] += mcu['PC[14:11]']
+touch_pad_lines += mcu['PC14, PC12, PC9, PC8']
+touch_slider[:] += mcu['PC13, PC11, PC10, PC6']
 
 unused_pins = efm_handle_unused_pins(mcu, vdd, gnd)
 print('These {} unused pins were connected to VDD:\n{}'.format(
