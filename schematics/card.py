@@ -192,9 +192,9 @@ touch_pad_lines = Bus('TOUCH_PAD', [pad[1] for pad in touch_pads])
 touch_pad_lines += mcu['PC(6|8|9|10)']
 touch_slider[:] += mcu['PC[14:11]']
 
-grounded_unused_pins = efm_handle_unused_pins(mcu, vdd, gnd)
-print('These {} unused pins were connected to ground:\n{}'.format(
-    len(grounded_unused_pins), '\n'.join([str(pin) for pin in grounded_unused_pins])
+unused_pins = efm_handle_unused_pins(mcu, vdd, gnd)
+print('These {} unused pins were connected to VDD:\n{}'.format(
+    len(unused_pins), '\n'.join([str(pin) for pin in unused_pins])
 ))
 
 ERC()
