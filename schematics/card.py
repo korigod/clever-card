@@ -193,7 +193,7 @@ coin_battery['-'].drive = POWER
 efm_power(mcu, vdd, gnd)
 efm_debugging_interface(mcu, pogo_pads, vdd, gnd)
 
-imu_power(imu, mcu['PD4'], vdd, gnd)
+imu_power(imu, mcu['PB11'], vdd, gnd)
 mcu_imu_spi(mcu, imu, gnd)
 
 efm_lfxo(mcu, lfxo, gnd)
