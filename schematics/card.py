@@ -41,10 +41,18 @@ def efm_power(efm, vdd, gnd):
         vdd & Cap('0.1uF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
     vdd & Cap('10uF', 'C_0603_1608Metric', description=f'IOVDD decoupling cap') & gnd
 
+    avdd = Net('MCU_AVDD')
+    avdd.drive = POWER
     for pin in efm['AVDD_[0-9]+']:
-        pin += vdd
-        vdd & Cap('10nF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
-    vdd & Cap('10uF', 'C_0603_1608Metric', description=f'AVDD decoupling cap') & gnd
+        pin += avdd
+        avdd & Cap('10nF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
+    avdd & Cap('10uF', 'C_0603_1608Metric', description=f'AVDD decoupling cap') & gnd
+    (
+        vdd &
+        Part('Device', 'Ferrite_Bead_Small', footprint='Inductor_SMD:L_0603_1608Metric') &
+        Res('1') &
+        avdd
+    )
 
     efm['VDD_DREG'] += vdd
     (
