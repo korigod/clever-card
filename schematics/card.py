@@ -34,12 +34,13 @@ def efm_power(efm, vdd, gnd):
     efm['VSS'] += gnd
 
     efm['DECOUPLE'] & Cap('1uF', 'C_0603_1608Metric') & gnd
+    efm['DECOUPLE'] & Cap('10uF', 'C_0603_1608Metric', ref='C1_1') & gnd
     efm['DECOUPLE'].drive = POWER
 
     for pin in efm['IOVDD_[0-9]+']:
         pin += vdd
         vdd & Cap('0.1uF', 'C_0603_1608Metric', description=f'{pin} decoupling cap') & gnd
-    vdd & Cap('10uF', 'C_0603_1608Metric', description=f'IOVDD decoupling cap') & gnd
+    vdd & Cap('1uF', 'C_0603_1608Metric', description=f'IOVDD decoupling cap') & gnd
 
     avdd = Net('MCU_AVDD')
     avdd.drive = POWER
@@ -58,8 +59,8 @@ def efm_power(efm, vdd, gnd):
     (
         vdd & (
             Cap('0.1uF', description='VDD decoupling cap') |
-            Cap('3.3uF', description='VDD decoupling cap') |
-            Cap('100uF', description='VDD decoupling cap')
+            Cap('10uF', description='VDD decoupling cap') |
+            Cap('47uF', description='VDD decoupling cap')
         ) & gnd
     )
 
