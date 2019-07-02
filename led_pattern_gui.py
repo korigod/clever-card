@@ -17,7 +17,7 @@ if __name__ == '__main__':
     w1 = Scale(master, from_=1, to=21, orient=HORIZONTAL)
     w1.set(9)
     w1.pack()
-    w2 = Scale(master, from_=1, to=2, orient=HORIZONTAL)
+    w2 = Scale(master, from_=0.5, to=10, orient=HORIZONTAL)
     w2.set(1)
     w2.pack()
     w3 = Scale(master, from_=1, to=21, orient=HORIZONTAL)

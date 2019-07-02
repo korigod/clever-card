@@ -1,0 +1,28 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C11";"C_0603_1608Metric";1;"47uF";"Murata GRM188R60J476ME15D";0.097;"https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_MuRata_GRM188R60J476ME15D_47uF-476-20-6-3V_C140782.html";
+2;"D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31,D32,D33,D34,D35,D36,D37,D38,D39,D40,D41,D42,D43,D44,D45,D46,D47,D48,D49";"LED_DUAL_0606";49;"LED_Dual_AACC";"Lite-On LTST-C195KGJRKT";0.0367;"https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_SMD-green-red_C125104.html";
+3;"R1";"R_0603_1608Metric";1;"1";"Walsin WR06W1R00FTL";0.0017;"https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount_1R-1R00-1_C163871.html";
+4;"U1";"LQFP-64_10x10mm_P0.5mm";1;"EFM32LG232F64";"SiLabs EFM32LG232F64";2.5;;
+5;"Y1";"Crystal_SMD_3215-2Pin_3.2x1.5mm";1;"32768Hz";"Yangxing X321532768KGB2SI";0.1575;"https://lcsc.com/product-detail/SMD-Crystals_Yangxing-Tech-YST310S32-768KHz12-5pF10ppm_C94279.html";
+6;"C1,C5";"C_0603_1608Metric";2;"1uF";"Samsung CL10A105KB8NNNC";0.0083;"https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_SAMSUNG_CL10A105KB8NNNC_1uF-105-10-50V_C15849.html";
+7;"C3,C4,C9,C12,C13,C2";"C_0603_1608Metric";6;"0.1uF";"Samsung CL10B104KB8NNNC";0.0067;"https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_SAMSUNG_CL10B104KB8NNNC_100nF-104-10-50V_C1591.html";
+8;"C6,C7";"C_0603_1608Metric";2;"10nF";"Samsung CL10B103JB8NNNC";0.0071;"https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_SAMSUNG_CL10B103JB8NNNC_10nF-103-5-50V_C7248.html";
+9;"C1_1,C8,C10,C14";"C_0603_1608Metric";4;"10uF";"Samsung CL10A106KP8NNNC";0.0260;"https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_SAMSUNG_CL10A106KP8NNNC_10uF-106-10-10V_C19702.html";
+10;"R2,R3";"R_0603_1608Metric";2;"0";"Walsin WR06X0000PTL";0.0017;"https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount_0R_C132607.html";
+11;"U2";"LSM6DS3";1;"LSM6DS3";"STM LSM6DS3TR";1.0261;"https://lcsc.com/product-detail/Others_STMicroelectronics_LSM6DS3TR_LSM6DS3TR_C95230.html";
+12;"BT1";"BatteryHolder_Keystone_3026_1x2016";1;"Battery_Cell";"Keystone 3026";0.5227;"https://ru.mouser.com/ProductDetail/Keystone-Electronics/3026";
+13;"C15,C16";"C_0603_1608Metric";2;"22pF";"Walsin 0603N220F101CT";0.0111;"https://lcsc.com/product-detail/Others_Huaxin-S-T-0603N220F101CT_C296053.html";
+14;"Q1";"SOT-23";1;"Q_PMOS_GSD";"Nexperia BSH203";0.1273;"https://lcsc.com/product-detail/MOSFET_Nexperia_BSH203-215_Nexperia-BSH203-215_C130424.html";
+15;"FB1";"L_0603_1608Metric";1;"Ferrite_Bead_Small";"Murata BLM18HE102SN1D / TDK MMZ1608R102ATA00";0.0377;"https://lcsc.com/product-detail/Ferrite-Beads-And-Chips_muRata_BLM18HE102SN1D_1KR-25-at100MHz_C85828.html";
+;;"CR2016";1;"";"Panasonic CR2016";0.21;"https://aliexpress.com/item/Panasonic-Top-Quality-Lithium-Battery-10PCS-LOT-3V-Li-ion-cr2016-Button-Battery-Watch-Coin-Batteries/32908958120.html";
+
+--
+
+https://lcsc.com/product-detail/MOSFET_Nexperia_BSS84-215_Nexperia-BSS84-215_C75548.html
+https://lcsc.com/product-detail/MOSFET_Nexperia_NX3008PBK-215_Nexperia-NX3008PBK-215_C131670.html
+https://lcsc.com/product-detail/MOSFET_ON-Semicon_FDV304P_ON-Semicon-ON-FDV304P_C10884.html
+https://lcsc.com/product-detail/MOSFET_ON-Semicon_NTR1P02LT1G_ON-Semicon-ON-NTR1P02LT1G_C146716.html
+
+--
+
+Коннекторы для дебага

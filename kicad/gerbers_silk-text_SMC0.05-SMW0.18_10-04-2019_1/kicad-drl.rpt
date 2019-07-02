@@ -1,0 +1,22 @@
+Drill report for /home/ak/Projects/clever-card/kicad/kicad.kicad_pcb
+Created on Wed 10 Apr 2019 08:12:09 PM MSK
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  B.Cu                      back
+
+
+Drill file 'kicad-PTH.drl' contains
+    plated through holes:
+    =============================================================
+    T1  0.30mm  0.012"  (110 holes)
+
+    Total plated holes count 110
+
+
+Drill file 'kicad-NPTH.drl' contains
+    unplated through holes:
+    =============================================================
+
+    Total unplated holes count 0

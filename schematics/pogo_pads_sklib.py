@@ -9,7 +9,7 @@ pogo_pads_lib = SchLib(tool=SKIDL).add_parts(*[
         tool=SKIDL,
         description='Single capacitive sense touch pad',
         keywords='capacitive sense touch pad',
-        ref_prefix='TS',
+        ref_prefix='J',
         do_erc=True,
         pins=[
             Pin(num=i, name=f'PAD{i}', func=Pin.PASSIVE, do_erc=True)
