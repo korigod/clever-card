@@ -1,4 +1,5 @@
 *.py[cod]
+__pycache__
 
 .vscode
 
@@ -9,3 +10,10 @@
 
 *bak
 _autosave*
+
+# Simplicity Studio unnecessary files and build artifacts
+/firmware-experimental/.metadata/
+/firmware-experimental/outgoing/
+/firmware-experimental/*/.settings/
+/firmware-experimental/*/GNU ARM * - Debug/
+/firmware-experimental/*/GNU ARM * - Release/
