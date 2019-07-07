@@ -1,0 +1,6 @@
+{
+    "[csv]": {
+        "editor.tabSize": 8
+    },
+    "cortex-debug.armToolchainPath": "/home/ak/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin",
+}

@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceRoot}/firmware-experimental/LG990_LSM6DS3",
+            "executable": "./build/Debug/exe/LG990_LSM6DS3.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32LG990F256",
+            "svdFile": "EFM32LG990F256.svd",
+            "preLaunchTask": "make"
+        }
+    ]
+}

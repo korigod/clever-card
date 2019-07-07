@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "arm_c_cpp_properties",
+            "compilerPath": "~/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/arm-none-eabi-gcc",
+            "includePath": [
+                "~/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include",
+                "~/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include/sys",
+                "~/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/lib/**",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Include",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc"
+            ],
+            "defines": [
+                "EFM32LG990F256"
+            ],
+            "cStandard": "c99"
+        }
+    ],
+    "version": 4
+}

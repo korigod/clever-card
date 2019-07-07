@@ -1,7 +1,7 @@
 *.py[cod]
 __pycache__
 
-.vscode
+.vscode/*.state.json
 
 # SKiDL output
 *.erc
@@ -11,9 +11,4 @@ __pycache__
 *bak
 _autosave*
 
-# Simplicity Studio unnecessary files and build artifacts
-/firmware-experimental/.metadata/
-/firmware-experimental/outgoing/
-/firmware-experimental/*/.settings/
-/firmware-experimental/*/GNU ARM * - Debug/
-/firmware-experimental/*/GNU ARM * - Release/
+/firmware-experimental/*/build
