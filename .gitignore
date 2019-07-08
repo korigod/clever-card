@@ -11,4 +11,5 @@ __pycache__
 *bak
 _autosave*
 
+/firmware/build
 /firmware-experimental/*/build
