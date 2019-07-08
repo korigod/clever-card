@@ -46,7 +46,7 @@ void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *qu
 }
 
 
-void initReceiveDma(QueueHandle_t imuRawQueueHandle) {
+void configureReceiveDMA(QueueHandle_t imuRawQueueHandle) {
 	static DMA_CB_TypeDef callbackRX;
 	callbackRX.cbFunc = (DMA_FuncPtr_TypeDef) rxCompletedCallback;
 	callbackRX.userPtr = imuRawQueueHandle;
@@ -69,7 +69,7 @@ void initReceiveDma(QueueHandle_t imuRawQueueHandle) {
 }
 
 
-void initTransmitDma(void) {
+void configureTransmitDMA(void) {
 	DMA_CfgChannel_TypeDef channelConfigTX;
 	channelConfigTX.highPri = false;
 	channelConfigTX.enableInt = true;
@@ -128,8 +128,8 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	init.controlBlock = dmaControlBlock;
 	DMA_Init(&init);
 
-	initReceiveDma(imuRawQueueHandle);
-	initTransmitDma();
+	configureReceiveDMA(imuRawQueueHandle);
+	configureTransmitDMA();
 
 	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
 	USART_Tx(USART1, 0x60);  // Enable accelerometer (416 Hz, high performance mode)
