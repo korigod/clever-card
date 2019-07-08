@@ -2,19 +2,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "make",
+            "label": "make LG990_FreeRTOS-blink",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "firmware-experimental/LG990_FreeRTOS-blink"
+            },
+            "group": "build"
+        },
+        {
+            "label": "make LG990_LSM6DS3",
             "type": "shell",
             "command": "make",
             "options": {
                 "cwd": "firmware-experimental/LG990_LSM6DS3"
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         }
     ]
 }
