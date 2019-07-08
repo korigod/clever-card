@@ -132,24 +132,35 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	configureTransmitDMA();
 
 	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
-	USART_Tx(USART1, 0x60);  // Enable accelerometer (416 Hz, high performance mode)
+	USART_Tx(USART1, 0x10);  // Enable accelerometer (12.5 Hz, low-power mmode)
 	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
 	USART_Rx(USART1);
+
+	USART_Tx(USART1, 0x0D);  // Transmit INT1_CTRL register address
+	USART_Tx(USART1, 0x01);  // Enable accelerometer Data Ready signal on INT1 line
+	USART_Rx(USART1);
+	USART_Rx(USART1);
+
+	queryIMU();
 }
 
 
 void queryIMU(void) {
-	DMA_ActivateBasic(SPI_RX_DMA_CHANNEL,
-	                  true,   // primary (not alternative) descriptor
-	                  false,  // don't use bursts
-	                  (void *) RxBuffer,
-	                  (void *) &USART1->RXDATA,
-	                  SPI_BUFFER_SIZE - 1);
+	if (!DMA_ChannelEnabled(SPI_RX_DMA_CHANNEL) &&
+	    !DMA_ChannelEnabled(SPI_TX_DMA_CHANNEL)) {
 
-	DMA_ActivateBasic(SPI_TX_DMA_CHANNEL,
-	                  true,
-	                  false,
-	                  (void *) &USART1->TXDATA,
-	                  (void *) TxBuffer,
-	                  SPI_BUFFER_SIZE - 1);
+		DMA_ActivateBasic(SPI_RX_DMA_CHANNEL,
+		                  true,   // primary (not alternative) descriptor
+		                  false,  // don't use bursts
+		                  (void *) RxBuffer,
+		                  (void *) &USART1->RXDATA,
+		                  SPI_BUFFER_SIZE - 1);
+
+		DMA_ActivateBasic(SPI_TX_DMA_CHANNEL,
+		                  true,
+		                  false,
+		                  (void *) &USART1->TXDATA,
+		                  (void *) TxBuffer,
+		                  SPI_BUFFER_SIZE - 1);
+	}
 }
