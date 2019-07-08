@@ -46,8 +46,7 @@ void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *qu
 		xTaskGetTickCountFromISR()
 	};
 	
-	int a = xQueueOverwriteFromISR((QueueHandle_t) queueHandle, &data_to_send, NULL);
-	int b = a;
+	xQueueOverwriteFromISR((QueueHandle_t) queueHandle, &data_to_send, NULL);
 }
 
 
