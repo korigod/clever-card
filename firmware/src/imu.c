@@ -13,13 +13,9 @@
 
 #include "imu.h"
 
-
-#define SPI_BUFFER_SIZE 8
+DMA_DESCRIPTOR_TypeDef dmaControlBlock[32] __attribute__((aligned(256)));
 
 uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA8, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-uint8_t RxBuffer[SPI_BUFFER_SIZE];
-
-DMA_DESCRIPTOR_TypeDef dmaControlBlock[32] __attribute__((aligned(256)));
 
 
 void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *queueHandle) {
@@ -124,11 +120,6 @@ void initUSART1(void) {
 void initIMU(QueueHandle_t imuRawQueueHandle) {
 	initUSART1();
 
-	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
-	USART_Tx(USART1, 0x60);  // Enable accelerometer (416 Hz, high performance mode)
-	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
-	USART_Rx(USART1);
-
 	// Priority 6 of 7 (medium priority of three RTOS-enabled, which are 5–7)
 	NVIC_SetPriority(DMA_IRQn, 0xDF);
 
@@ -139,27 +130,26 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 
 	initReceiveDma(imuRawQueueHandle);
 	initTransmitDma();
+
+	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
+	USART_Tx(USART1, 0x60);  // Enable accelerometer (416 Hz, high performance mode)
+	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
+	USART_Rx(USART1);
 }
 
 
-void queryIMU(void * pvParameters) {
-	for ( ;; ) {
-		// xTaskNotifyWait(0, ULONG_MAX, NULL, portMAX_DELAY);
+void queryIMU(void) {
+	DMA_ActivateBasic(SPI_RX_DMA_CHANNEL,
+	                  true,   // primary (not alternative) descriptor
+	                  false,  // don't use bursts
+	                  (void *) RxBuffer,
+	                  (void *) &USART1->RXDATA,
+	                  SPI_BUFFER_SIZE - 1);
 
-		vTaskDelay(pdMS_TO_TICKS(100));  // For debug purposes
-
-		DMA_ActivateBasic(SPI_RX_DMA_CHANNEL,
-		                  true,   // primary (not alternative) descriptor
-		                  false,  // don't use bursts
-		                  (void *) RxBuffer,
-		                  (void *) &USART1->RXDATA,
-		                  SPI_BUFFER_SIZE - 1);
-
-		DMA_ActivateBasic(SPI_TX_DMA_CHANNEL,
-		                  true,
-		                  false,
-		                  (void *) &USART1->TXDATA,
-		                  (void *) TxBuffer,
-		                  SPI_BUFFER_SIZE - 1);
-	}
+	DMA_ActivateBasic(SPI_TX_DMA_CHANNEL,
+	                  true,
+	                  false,
+	                  (void *) &USART1->TXDATA,
+	                  (void *) TxBuffer,
+	                  SPI_BUFFER_SIZE - 1);
 }

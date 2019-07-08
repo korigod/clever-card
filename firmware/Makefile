@@ -137,6 +137,7 @@ $(FREERTOS_DIR)/Source/portable/MemMang/heap_2.c \
 $(FREERTOS_DIR)/Source/portable/GCC/ARM_CM3/port.c \
 src/static_alloc.c \
 src/debug_hooks.c \
+src/gpio_irq.c \
 src/imu.c \
 src/main.c
 
