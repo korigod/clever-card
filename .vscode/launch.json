@@ -2,6 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Firmware Debug",
+            "cwd": "${workspaceRoot}/firmware",
+            "executable": "./build/Debug/exe/card.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32LG990F256",
+            "svdFile": "EFM32LG990F256.svd",
+            //"rtos": "FreeRTOS",
+            "preLaunchTask": "make firmware"
+        },
+        {
             "name": "LG990_FreeRTOS-blink Debug",
             "cwd": "${workspaceRoot}/firmware-experimental/LG990_FreeRTOS-blink",
             "executable": "./build/Debug/exe/LG990_FreeRTOS-blink.out",

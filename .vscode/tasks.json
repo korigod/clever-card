@@ -2,6 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "make firmware",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "firmware"
+            },
+            "group": {
+                "kind":"build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "make LG990_FreeRTOS-blink",
             "type": "shell",
             "command": "make",
