@@ -16,7 +16,7 @@ void GPIO_ODD_IRQHandler(void)
 void enableLSM6DS3Interrupt(void) {
 	GPIO_PinModeSet(IMU_IRQ_GPIO_PORT,
 	                IMU_IRQ_GPIO_PIN,
-	                gpioModeInputPullFilter,
+	                gpioModeInput,
 	                1); // 1 for pull-up
 
 	NVIC_EnableIRQ(GPIO_ODD_IRQn);
@@ -24,7 +24,7 @@ void enableLSM6DS3Interrupt(void) {
 	GPIO_ExtIntConfig(IMU_IRQ_GPIO_PORT,
 	                  0,                // unused arg
 	                  IMU_IRQ_GPIO_PIN, // interrupt line (= pin)
-	                  false,            // rising edge interrupt
-	                  true,             // falling edge interrupt
+	                  true,            // rising edge interrupt
+	                  false,             // falling edge interrupt
 	                  true);            // enable
 }
