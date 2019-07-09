@@ -8,31 +8,30 @@
 #include "timer.h"
 
 
-void initMicrosecondsDelayTimer(void) {
-	sysClockFreq = CMU_ClockFreqGet(cmuClock_CORE);
-	configASSERT(sysClockFreq >= 1000000);
-	ticksPerMicrosecond = sysClockFreq / 1000000;
+void TIMER1_IRQHandler(void) {
+	if (TIMER_IntGet(TIMER1) & TIMER_IF_OF) {
+		TIMER_IntClear(TIMER1, TIMER_IF_OF);
+		overflowsTillBoot += 1;
 
-	CMU_ClockEnable(MICROSEC_DELAY_TIMER_CLK, true);
-	TIMER_Init_TypeDef timerInit = { .enable     = true,
-	                                 .debugRun   = false,
-	                                 .prescale   = timerPrescale1,
-	                                 .clkSel     = timerClkSelHFPerClk,
-	                                 .count2x    = false,
-	                                 .ati        = false,
-	                                 .fallAction = timerInputActionNone,
-	                                 .riseAction = timerInputActionNone,
-	                                 .mode       = timerModeUp,
-	                                 .dmaClrAct  = false,
-	                                 .quadModeX4 = false,
-	                                 .oneShot    = false,
-	                                 .sync       = false };
-	TIMER_Init(MICROSEC_DELAY_TIMER, &timerInit);
+		usecondsBeforeLastTimerOverflow =
+			((uint64_t)overflowsTillBoot * timerTicksPeriod * 16 * 1000000) / sysClockFreq;
+	}
 }
 
 
-void initDebugTimer(void) {
-	CMU_ClockEnable(DEBUG_TIMER_CLK, true);
+void initMicrosecondsTimer(void) {
+	sysClockFreq = CMU_ClockFreqGet(cmuClock_CORE);
+	sysClockFreqKHz = sysClockFreq / 1000;
+	usecondsBeforeLastTimerOverflow = 0;
+	overflowsTillBoot = 0;
+
+	CMU_ClockEnable(cmuClock_TIMER1, true);
+	TIMER_IntEnable(TIMER1, TIMER_IEN_OF);
+	NVIC_EnableIRQ(TIMER1_IRQn);
+
+	// Timer is inialized with max top value (0xFFFF) by default
+	timerTicksPeriod = TIMER_TopGet(TIMER1) + 1;
+
 	TIMER_Init_TypeDef timerInit = { .enable     = true,
 	                                 .debugRun   = false,
 	                                 .prescale   = timerPrescale16,
@@ -46,33 +45,24 @@ void initDebugTimer(void) {
 	                                 .quadModeX4 = false,
 	                                 .oneShot    = false,
 	                                 .sync       = false };
-	TIMER_Init(DEBUG_TIMER, &timerInit);
+	TIMER_Init(TIMER1, &timerInit);
+}
+
+
+uint32_t usecondsTillBoot(void) {
+	// Pay attention to uint32_t overflow and loss of precision
+	// with low clock frequencies when editing this
+
+	uint32_t sinceLastTimerOverflow =
+		(TIMER_CounterGet(TIMER1) * 16 * 1000) / sysClockFreqKHz;
+
+	return usecondsBeforeLastTimerOverflow + sinceLastTimerOverflow;
 }
 
 
 void delayMicroseconds(uint32_t microseconds) {
-	uint32_t startTickCount = TIMER_CounterGet(MICROSEC_DELAY_TIMER);
-	uint32_t ticksToWait = microseconds * ticksPerMicrosecond;
-	uint32_t finishTickCount = startTickCount + ticksToWait;
+	uint32_t startTime = usecondsTillBoot();
 
-	while(1) {
-		if (finishTickCount < TIMER_CounterGet(MICROSEC_DELAY_TIMER)) {
-			break;
-		}
-
-		// If the timer has overflowed, we reduce the target tick count
-		// by the timer period.
-		if (TIMER_IntGet(MICROSEC_DELAY_TIMER) & TIMER_IF_OF) {
-
-			TIMER_IntClear(MICROSEC_DELAY_TIMER, TIMER_IF_OF);
-
-			uint32_t timerTopValue = TIMER_TopGet(MICROSEC_DELAY_TIMER);
-
-			if (finishTickCount > timerTopValue) {
-				finishTickCount = finishTickCount - timerTopValue;
-			} else {
-				break;
-			}
-		}
+	while(usecondsTillBoot() - startTime < microseconds) {
 	}
 }

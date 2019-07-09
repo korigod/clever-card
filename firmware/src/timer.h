@@ -1,15 +1,14 @@
 #include "em_timer.h"
 
-#define MICROSEC_DELAY_TIMER      TIMER2
-#define MICROSEC_DELAY_TIMER_CLK  cmuClock_TIMER2
-
-#define DEBUG_TIMER               TIMER3
-#define DEBUG_TIMER_CLK           cmuClock_TIMER3
-
 uint32_t sysClockFreq;
-uint32_t ticksPerMicrosecond;
+uint32_t sysClockFreqKHz;
 
-void initMicrosecondsDelayTimer(void);
+static uint32_t overflowsTillBoot;
+static uint32_t timerTicksPeriod;
+static uint32_t usecondsBeforeLastTimerOverflow;
+
+void initMicrosecondsTimer(void);
+
+uint32_t usecondsTillBoot(void);
+
 void delayMicroseconds(uint32_t microseconds);
-
-void initDebugTimer(void);
