@@ -12,6 +12,7 @@
 #include "semphr.h"
 
 #include "imu.h"
+#include "timer.h"
 
 DMA_DESCRIPTOR_TypeDef dmaControlBlock[32] __attribute__((aligned(256)));
 
@@ -96,7 +97,7 @@ void initUSART1(void) {
 
 	USART_InitSync_TypeDef config = USART_INITSYNC_DEFAULT;
 	config.master = true;
-	config.baudrate = 1000000;          // CLK freq is 1 MHz
+	config.baudrate = LSM6DS3_SPI_BAUDRATE;
 	config.autoCsEnable = true;         // CS pin controlled by hardware, not firmware
 	config.clockMode = usartClockMode3; // clock idle high, sample on rising/trailing edge
 	config.msbf = true;                 // send MSb first
@@ -128,20 +129,28 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	configureReceiveDMA(imuRawQueueHandle);
 	configureTransmitDMA();
 
+	uint32_t byteTransmissionTime = 8 * 1000000 / LSM6DS3_SPI_BAUDRATE;
+
 	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
 	USART_Tx(USART1, 0x10);  // Enable accelerometer (12.5 Hz, low-power mode)
 	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
 	USART_Rx(USART1);
+
+	delayMicroseconds(byteTransmissionTime);
 
 	USART_Tx(USART1, 0x11);  // Transmit CTRL2_G register address
 	USART_Tx(USART1, 0x10);  // Enable angular rate sensor (12.5 Hz, low-power mode)
 	USART_Rx(USART1);
 	USART_Rx(USART1);
 
+	delayMicroseconds(byteTransmissionTime);
+
 	USART_Tx(USART1, 0x0D);  // Transmit INT1_CTRL register address
 	USART_Tx(USART1, 0x01);  // Enable accelerometer Data Ready signal on INT1 line
 	USART_Rx(USART1);
 	USART_Rx(USART1);
+
+	delayMicroseconds(byteTransmissionTime);
 }
 
 

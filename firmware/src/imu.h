@@ -4,6 +4,7 @@
 #include "FreeRTOS.h"
 
 
+#define LSM6DS3_SPI_BAUDRATE 1000000
 #define SPI_RX_DMA_CHANNEL 0
 #define SPI_TX_DMA_CHANNEL 1
 #define SPI_BUFFER_SIZE 14
