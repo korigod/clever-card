@@ -35,7 +35,7 @@ extern "C" {
 #define configSUPPORT_STATIC_ALLOCATION			( 1 )
 #define configCPU_CLOCK_HZ						((unsigned long) 14000000)
 #define configMAX_PRIORITIES					( 3 )
-#define configMINIMAL_STACK_SIZE				((StackType_t) 150)
+#define configMINIMAL_STACK_SIZE				((StackType_t) 64)
 #define configTOTAL_HEAP_SIZE					((size_t) 1024)
 #define configMAX_TASK_NAME_LEN					( 10 )
 #define configUSE_TRACE_FACILITY				( 1 )
