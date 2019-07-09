@@ -3,8 +3,6 @@
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 
-#define ULONG_MAX 0xFFFFFFFFUL
-
 
 #define SPI_RX_DMA_CHANNEL 0
 #define SPI_TX_DMA_CHANNEL 1
