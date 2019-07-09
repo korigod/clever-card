@@ -8,7 +8,7 @@
 
 #define SPI_RX_DMA_CHANNEL 0
 #define SPI_TX_DMA_CHANNEL 1
-#define SPI_BUFFER_SIZE 8
+#define SPI_BUFFER_SIZE 14
 extern uint8_t TxBuffer[SPI_BUFFER_SIZE];
 uint8_t RxBuffer[SPI_BUFFER_SIZE];
 

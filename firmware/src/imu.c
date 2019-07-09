@@ -15,26 +15,23 @@
 
 DMA_DESCRIPTOR_TypeDef dmaControlBlock[32] __attribute__((aligned(256)));
 
-uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA8, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA2, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+                                      0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
 
 void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *queueHandle) {
-	// RxBuffer[1] contains the LSB of X axis acceleration reading,
-	// and RxBuffer[2] contains the MSB.
-	int16_t accel_x = RxBuffer[1] | RxBuffer[2] << 8;
-	int16_t accel_y = RxBuffer[3] | RxBuffer[4] << 8;
-	int16_t accel_z = RxBuffer[5] | RxBuffer[6] << 8;
-	// There should be 0x00 in RxBuffer[7] if the data is read correctly.
-	// RxBuffer[0] is junk data and should be discarded.
+	int16_t accel_x = RxBuffer[7] | RxBuffer[8] << 8;
+	int16_t accel_y = RxBuffer[9] | RxBuffer[10] << 8;
+	int16_t accel_z = RxBuffer[11] | RxBuffer[12] << 8;
 
 	// Default acceleration limits are -2g/+2g, so 1g is max_int16 / 2
 	float x_float = accel_x / 16384.0f;
 	float y_float = accel_y / 16384.0f;
 	float z_float = accel_z / 16384.0f;
 
-	int16_t gyro_x = 0;
-	int16_t gyro_y = 0;
-	int16_t gyro_z = 0;
+	int16_t gyro_x = RxBuffer[1] | RxBuffer[2] << 8;
+	int16_t gyro_y = RxBuffer[3] | RxBuffer[4] << 8;
+	int16_t gyro_z = RxBuffer[5] | RxBuffer[6] << 8;
 
 	struct ImuRaw data_to_send = {
 		{ accel_x, accel_y, accel_z },
@@ -132,8 +129,13 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	configureTransmitDMA();
 
 	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
-	USART_Tx(USART1, 0x10);  // Enable accelerometer (12.5 Hz, low-power mmode)
+	USART_Tx(USART1, 0x10);  // Enable accelerometer (12.5 Hz, low-power mode)
 	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
+	USART_Rx(USART1);
+
+	USART_Tx(USART1, 0x11);  // Transmit CTRL2_G register address
+	USART_Tx(USART1, 0x10);  // Enable angular rate sensor (12.5 Hz, low-power mode)
+	USART_Rx(USART1);
 	USART_Rx(USART1);
 
 	USART_Tx(USART1, 0x0D);  // Transmit INT1_CTRL register address
