@@ -115,6 +115,18 @@ void initUSART1(void) {
 }
 
 
+void writeRegister(uint8_t address, uint8_t value) {
+	USART_Tx(USART1, address);
+	USART_Tx(USART1, value);
+
+	// Dump two bytes of "response" (junk Rx)
+	USART_Rx(USART1);
+	USART_Rx(USART1);
+
+	delayMicroseconds(8 * 1000000 / LSM6DS3_SPI_BAUDRATE);
+}
+
+
 void initIMU(QueueHandle_t imuRawQueueHandle) {
 	initUSART1();
 
@@ -129,28 +141,14 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	configureReceiveDMA(imuRawQueueHandle);
 	configureTransmitDMA();
 
-	uint32_t byteTransmissionTime = 8 * 1000000 / LSM6DS3_SPI_BAUDRATE;
+	// Enable accelerometer (12.5 Hz, low-power mode)
+	writeRegister(0x10, 0x10);
 
-	USART_Tx(USART1, 0x10);  // Transmit CTRL1_XL register address
-	USART_Tx(USART1, 0x10);  // Enable accelerometer (12.5 Hz, low-power mode)
-	USART_Rx(USART1);  // Dump two bytes of "response" (junk Rx)
-	USART_Rx(USART1);
+	// Enable angular rate sensor (12.5 Hz, low-power mode)
+	writeRegister(0x11, 0x10);
 
-	delayMicroseconds(byteTransmissionTime);
-
-	USART_Tx(USART1, 0x11);  // Transmit CTRL2_G register address
-	USART_Tx(USART1, 0x10);  // Enable angular rate sensor (12.5 Hz, low-power mode)
-	USART_Rx(USART1);
-	USART_Rx(USART1);
-
-	delayMicroseconds(byteTransmissionTime);
-
-	USART_Tx(USART1, 0x0D);  // Transmit INT1_CTRL register address
-	USART_Tx(USART1, 0x01);  // Enable accelerometer Data Ready signal on INT1 line
-	USART_Rx(USART1);
-	USART_Rx(USART1);
-
-	delayMicroseconds(byteTransmissionTime);
+	// Enable accelerometer Data Ready signal on INT1 line
+	writeRegister(0x0D, 0x01);
 }
 
 
