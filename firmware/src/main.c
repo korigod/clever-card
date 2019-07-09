@@ -4,6 +4,7 @@
 #include "em_chip.h"
 #include "em_cmu.h"
 #include "em_gpio.h"
+#include "em_timer.h"
 
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
@@ -18,9 +19,30 @@
 #define QUERY_IMU_PRIORITY 1
 
 
+void setupDebugTimer() {
+	CMU_ClockEnable(cmuClock_TIMER3, true);
+	TIMER_Init_TypeDef timerInit = { .enable     = true,
+	                                 .debugRun   = false,
+	                                 .prescale   = timerPrescale16,
+	                                 .clkSel     = timerClkSelHFPerClk,
+	                                 .count2x    = false,
+	                                 .ati        = false,
+	                                 .fallAction = timerInputActionNone,
+	                                 .riseAction = timerInputActionNone,
+	                                 .mode       = timerModeUp,
+	                                 .dmaClrAct  = false,
+	                                 .quadModeX4 = false,
+	                                 .oneShot    = false,
+	                                 .sync       = false };
+	TIMER_Init(TIMER3, &timerInit);
+}
+
+
 int main(void)
 {
 	CHIP_Init();
+
+	setupDebugTimer();
 
 	CMU_ClockEnable(cmuClock_GPIO, true);
 

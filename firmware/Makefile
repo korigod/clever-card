@@ -127,6 +127,7 @@ $(SDK_DIR)/platform/emlib/src/em_ebi.c \
 $(SDK_DIR)/platform/emlib/src/em_emu.c \
 $(SDK_DIR)/platform/emlib/src/em_gpio.c \
 $(SDK_DIR)/platform/emlib/src/em_system.c \
+$(SDK_DIR)/platform/emlib/src/em_timer.c \
 $(SDK_DIR)/platform/emlib/src/em_usart.c \
 $(FREERTOS_DIR)/Source/timers.c \
 $(FREERTOS_DIR)/Source/tasks.c \
