@@ -10,6 +10,6 @@ uint32_t sysClockFreq;
 uint32_t ticksPerMicrosecond;
 
 void initMicrosecondsDelayTimer(void);
-void delayMicroseconds(uint16_t microseconds);
+void delayMicroseconds(uint32_t microseconds);
 
 void initDebugTimer(void);

@@ -1,4 +1,3 @@
-#include <limits.h>
 #include "em_cmu.h"
 #include "em_timer.h"
 
@@ -51,20 +50,29 @@ void initDebugTimer(void) {
 }
 
 
-void delayMicroseconds(uint16_t microseconds) {
-	uint16_t startTickCount = (uint16_t)TIMER_CounterGet(MICROSEC_DELAY_TIMER);
-
+void delayMicroseconds(uint32_t microseconds) {
+	uint32_t startTickCount = TIMER_CounterGet(MICROSEC_DELAY_TIMER);
 	uint32_t ticksToWait = microseconds * ticksPerMicrosecond;
-	configASSERT(ticksToWait < (uint32_t)USHRT_MAX);
-	if (ticksToWait > USHRT_MAX) {
-		ticksToWait = USHRT_MAX;
-	}
+	uint32_t finishTickCount = startTickCount + ticksToWait;
 
-	uint16_t ticksPassed;
 	while(1) {
-		ticksPassed = (uint16_t)TIMER_CounterGet(MICROSEC_DELAY_TIMER) - startTickCount;
-		if (ticksPassed >= ticksToWait) {
+		if (finishTickCount < TIMER_CounterGet(MICROSEC_DELAY_TIMER)) {
 			break;
+		}
+
+		// If the timer has overflowed, we reduce the target tick count
+		// by the timer period.
+		if (TIMER_IntGet(MICROSEC_DELAY_TIMER) & TIMER_IF_OF) {
+
+			TIMER_IntClear(MICROSEC_DELAY_TIMER, TIMER_IF_OF);
+
+			uint32_t timerTopValue = TIMER_TopGet(MICROSEC_DELAY_TIMER);
+
+			if (finishTickCount > timerTopValue) {
+				finishTickCount = finishTickCount - timerTopValue;
+			} else {
+				break;
+			}
 		}
 	}
 }
