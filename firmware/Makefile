@@ -134,7 +134,6 @@ $(FREERTOS_DIR)/Source/tasks.c \
 $(FREERTOS_DIR)/Source/queue.c \
 $(FREERTOS_DIR)/Source/list.c \
 $(FREERTOS_DIR)/Source/event_groups.c \
-$(FREERTOS_DIR)/Source/portable/MemMang/heap_2.c \
 $(FREERTOS_DIR)/Source/portable/GCC/ARM_CM3/port.c \
 src/static_alloc.c \
 src/debug_hooks.c \
