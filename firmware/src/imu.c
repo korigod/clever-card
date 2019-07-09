@@ -154,12 +154,20 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 
 void queryIMU(void * pvParameters) {
 	for ( ;; ) {
+		uint32_t blockedTime = usecondsTillBoot();
+
 		// The timeout value should be decreased in production
 		xTaskNotifyWait(0, 0, NULL, pdMS_TO_TICKS(200));
 
+		if (usecondsTillBoot() - blockedTime < 1000) {
+			// Throttle IMU queries
+			vTaskDelay(pdMS_TO_TICKS(1));
+		}
+
 		while (DMA_ChannelEnabled(SPI_RX_DMA_CHANNEL) ||
 		       DMA_ChannelEnabled(SPI_TX_DMA_CHANNEL)) {
-
+			// Just to be sure that transfer will never be initiated
+			// while previous one is still in progress.
 			vTaskDelay(1);
 		}
 
