@@ -24,8 +24,7 @@ int main(void)
 {
 	CHIP_Init();
 
-	initMicrosecondsDelayTimer();
-	initDebugTimer();
+	initMicrosecondsTimer();
 
 	CMU_ClockEnable(cmuClock_GPIO, true);
 
