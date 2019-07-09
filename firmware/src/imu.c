@@ -140,14 +140,19 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	USART_Tx(USART1, 0x01);  // Enable accelerometer Data Ready signal on INT1 line
 	USART_Rx(USART1);
 	USART_Rx(USART1);
-
-	queryIMU();
 }
 
 
-void queryIMU(void) {
-	if (!DMA_ChannelEnabled(SPI_RX_DMA_CHANNEL) &&
-	    !DMA_ChannelEnabled(SPI_TX_DMA_CHANNEL)) {
+void queryIMU(void * pvParameters) {
+	for ( ;; ) {
+		// The timeout value should be decreased in production
+		xTaskNotifyWait(0, 0, NULL, pdMS_TO_TICKS(200));
+
+		while (DMA_ChannelEnabled(SPI_RX_DMA_CHANNEL) ||
+		       DMA_ChannelEnabled(SPI_TX_DMA_CHANNEL)) {
+
+			vTaskDelay(1);
+		}
 
 		DMA_ActivateBasic(SPI_RX_DMA_CHANNEL,
 		                  true,   // primary (not alternative) descriptor
