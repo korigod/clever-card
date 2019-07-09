@@ -52,7 +52,15 @@ int main(void)
 	                                               &_imu_raw_queue_service_data);
 	configASSERT(imuRawQueue);
 
-	enableLSM6DS3Interrupt();
+	TaskHandle_t queryIMUHandle = xTaskCreateStatic(queryIMU,
+	                                                (const char *)"queryIMU",
+	                                                QUERY_IMU_STACK_SIZE,
+	                                                NULL,
+	                                                QUERY_IMU_PRIORITY,
+	                                                _query_imu_stack,
+	                                                &_query_imu_buffer);
+
+	enableLSM6DS3Interrupt(queryIMUHandle);
 
 	initIMU(imuRawQueue);
 

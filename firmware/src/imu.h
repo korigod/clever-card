@@ -24,6 +24,10 @@ struct ImuRaw {
 };
 
 
-void initIMU();
+#define QUERY_IMU_STACK_SIZE configMINIMAL_STACK_SIZE
+static StaticTask_t _query_imu_buffer;
+static StackType_t _query_imu_stack[QUERY_IMU_STACK_SIZE];
+void queryIMU(void * pvParameters);
 
-void queryIMU(void);
+
+void initIMU();

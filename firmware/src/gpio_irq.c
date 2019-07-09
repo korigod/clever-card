@@ -1,5 +1,3 @@
-#include "em_gpio.h"
-
 #include "imu.h"
 #include "gpio_irq.h"
 
@@ -8,16 +6,21 @@ void GPIO_ODD_IRQHandler(void)
 {
 	if (GPIO_IntGet() & (1 << IMU_IRQ_GPIO_PIN)) {
 		GPIO_IntClear(1 << IMU_IRQ_GPIO_PIN);
-		queryIMU();
+		xTaskNotifyFromISR(_task_to_notify, 0, eNoAction, NULL);
 	}
 }
 
 
-void enableLSM6DS3Interrupt(void) {
+void enableLSM6DS3Interrupt(TaskHandle_t taskToNotify) {
+	_task_to_notify = taskToNotify;
+
 	GPIO_PinModeSet(IMU_IRQ_GPIO_PORT,
 	                IMU_IRQ_GPIO_PIN,
 	                gpioModeInput,
 	                1); // 1 for pull-up
+
+	// Priority 6 of 7 (medium priority of three RTOS-enabled, which are 5–7)
+	NVIC_SetPriority(GPIO_ODD_IRQn, 0xDF);
 
 	NVIC_EnableIRQ(GPIO_ODD_IRQn);
 
