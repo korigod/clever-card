@@ -140,6 +140,7 @@ src/static_alloc.c \
 src/debug_hooks.c \
 src/gpio_irq.c \
 src/imu.c \
+src/timer.c \
 src/main.c
 
 S_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32LG/Source/GCC/startup_efm32lg.S
