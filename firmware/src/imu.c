@@ -14,7 +14,7 @@
 #include "imu.h"
 #include "timer.h"
 
-DMA_DESCRIPTOR_TypeDef dmaControlBlock[32] __attribute__((aligned(256)));
+DMA_DESCRIPTOR_TypeDef dmaControlBlock[2] __attribute__((aligned(256)));
 
 uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA2, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                                       0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
@@ -39,7 +39,7 @@ void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *qu
 		{ gyro_x, gyro_y, gyro_z },
 		xTaskGetTickCountFromISR()
 	};
-	
+
 	xQueueOverwriteFromISR((QueueHandle_t) queueHandle, &data_to_send, NULL);
 }
 
