@@ -10,8 +10,20 @@
             "servertype": "jlink",
             "device": "EFM32LG990F256",
             "svdFile": "EFM32LG990F256.svd",
-            //"rtos": "FreeRTOS",
+            // "rtos": "FreeRTOS",
             "preLaunchTask": "make firmware"
+        },
+        {
+            "name": "Firmware Release",
+            "cwd": "${workspaceRoot}/firmware",
+            "executable": "./build/Release/exe/card.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32LG990F256",
+            "svdFile": "EFM32LG990F256.svd",
+            // "rtos": "FreeRTOS",
+            "preLaunchTask": "make release firmware"
         },
         {
             "name": "LG990_FreeRTOS-blink Debug",
@@ -22,6 +34,7 @@
             "servertype": "jlink",
             "device": "EFM32LG990F256",
             "svdFile": "EFM32LG990F256.svd",
+            "rtos": "/opt/SEGGER/JLink_V646i/GDBServer/RTOSPlugin_FreeRTOS.so",
             "preLaunchTask": "make LG990_FreeRTOS-blink"
         },
         {
