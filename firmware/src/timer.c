@@ -50,8 +50,8 @@ void initMicrosecondsTimer(void) {
 
 
 uint32_t usecondsTillBoot(void) {
-	// Pay attention to uint32_t overflow and loss of precision
-	// with low clock frequencies when editing this
+	// Pay attention to uint32_t overflow as well as to the loss
+	// of precision with low clock frequencies when editing this
 
 	uint32_t sinceLastTimerOverflow =
 		(TIMER_CounterGet(TIMER1) * 16 * 1000) / sysClockFreqKHz;
