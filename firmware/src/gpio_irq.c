@@ -6,13 +6,13 @@ void GPIO_ODD_IRQHandler(void)
 {
 	if (GPIO_IntGet() & (1 << IMU_IRQ_GPIO_PIN)) {
 		GPIO_IntClear(1 << IMU_IRQ_GPIO_PIN);
-		xTaskNotifyFromISR(_task_to_notify, 0, eNoAction, NULL);
+		xTaskNotifyFromISR(imuTaskToNotify, 0, eNoAction, NULL);
 	}
 }
 
 
 void enableLSM6DS3Interrupt(TaskHandle_t taskToNotify) {
-	_task_to_notify = taskToNotify;
+	imuTaskToNotify = taskToNotify;
 
 	GPIO_PinModeSet(IMU_IRQ_GPIO_PORT,
 	                IMU_IRQ_GPIO_PIN,
