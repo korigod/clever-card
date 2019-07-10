@@ -21,26 +21,26 @@ uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA2, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 
 
 void rxCompletedCallback(uint32_t channelNum, bool isPrimaryDescriptor, void *queueHandle) {
-	int16_t accel_x = RxBuffer[7] | RxBuffer[8] << 8;
-	int16_t accel_y = RxBuffer[9] | RxBuffer[10] << 8;
-	int16_t accel_z = RxBuffer[11] | RxBuffer[12] << 8;
+	int16_t accelX = RxBuffer[7] | RxBuffer[8] << 8;
+	int16_t accelY = RxBuffer[9] | RxBuffer[10] << 8;
+	int16_t accelZ = RxBuffer[11] | RxBuffer[12] << 8;
 
 	// Default acceleration limits are -2g/+2g, so 1g is max_int16 / 2
-	float x_float = accel_x / 16384.0f;
-	float y_float = accel_y / 16384.0f;
-	float z_float = accel_z / 16384.0f;
+	float xFloat = accelX / 16384.0f;
+	float yFloat = accelY / 16384.0f;
+	float zFloat = accelZ / 16384.0f;
 
-	int16_t gyro_x = RxBuffer[1] | RxBuffer[2] << 8;
-	int16_t gyro_y = RxBuffer[3] | RxBuffer[4] << 8;
-	int16_t gyro_z = RxBuffer[5] | RxBuffer[6] << 8;
+	int16_t gyroX = RxBuffer[1] | RxBuffer[2] << 8;
+	int16_t gyroY = RxBuffer[3] | RxBuffer[4] << 8;
+	int16_t gyroZ = RxBuffer[5] | RxBuffer[6] << 8;
 
-	struct ImuRaw data_to_send = {
-		{ accel_x, accel_y, accel_z },
-		{ gyro_x, gyro_y, gyro_z },
+	struct ImuRaw dataToSend = {
+		{ accelX, accelY, accelZ },
+		{ gyroX, gyroY, gyroZ },
 		xTaskGetTickCountFromISR()
 	};
 
-	xQueueOverwriteFromISR((QueueHandle_t) queueHandle, &data_to_send, NULL);
+	xQueueOverwriteFromISR((QueueHandle_t) queueHandle, &dataToSend, NULL);
 }
 
 

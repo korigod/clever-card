@@ -30,8 +30,8 @@ int main(void)
 
 	QueueHandle_t imuRawQueue = xQueueCreateStatic(IMU_RAW_QUEUE_LENGTH,
 	                                               IMU_RAW_SIZE,
-	                                               _imu_raw_queue_items,
-	                                               &_imu_raw_queue_service_data);
+	                                               imuRawQueueStorage,
+	                                               &imuRawQueueDataStructure);
 	configASSERT(imuRawQueue);
 
 	TaskHandle_t queryIMUHandle = xTaskCreateStatic(queryIMU,
@@ -39,8 +39,8 @@ int main(void)
 	                                                QUERY_IMU_STACK_SIZE,
 	                                                NULL,
 	                                                QUERY_IMU_PRIORITY,
-	                                                _query_imu_stack,
-	                                                &_query_imu_buffer);
+	                                                queryIMUTaskStack,
+	                                                &queryIMUTaskControlBlock);
 
 	enableLSM6DS3Interrupt(queryIMUHandle);
 
