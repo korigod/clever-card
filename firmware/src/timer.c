@@ -9,6 +9,14 @@
 
 
 void TIMER1_IRQHandler(void) {
+	if (TIMER_IntGet(TIMER1) & TIMER_IF_CC0) {
+		if (timerCallback != NULL) {
+			timerCallback();
+			timerCallback = NULL;
+		}
+		TIMER_IntClear(TIMER1, TIMER_IF_CC0);
+		TIMER_IntDisable(TIMER1, TIMER_IEN_CC0);
+	}
 	if (TIMER_IntGet(TIMER1) & TIMER_IF_OF) {
 		TIMER_IntClear(TIMER1, TIMER_IF_OF);
 		overflowsTillBoot += 1;
@@ -31,6 +39,20 @@ void initMicrosecondsTimer(void) {
 
 	// Timer is inialized with max top value (0xFFFF) by default
 	timerTicksPeriod = TIMER_TopGet(TIMER1) + 1;
+
+	TIMER_InitCC_TypeDef timerCCInit = { .eventCtrl  = timerEventEveryEdge,
+	                                     .edge       = timerEdgeNone,
+	                                     .prsSel     = 0,
+	                                     .cufoa      = timerOutputActionNone,
+	                                     .cofoa      = timerOutputActionNone,
+	                                     .cmoa       = timerOutputActionNone,
+	                                     .mode       = timerCCModeCompare,
+	                                     .filter     = false,
+	                                     .prsInput   = false,
+	                                     .coist      = false,
+	                                     .outInvert  = false,
+	                                     .prsOutput  = timerPrsOutputDefault };
+	TIMER_InitCC(TIMER1, 0, &timerCCInit);
 
 	TIMER_Init_TypeDef timerInit = { .enable     = true,
 	                                 .debugRun   = false,
@@ -65,4 +87,23 @@ void delayMicroseconds(uint32_t microseconds) {
 
 	while(usecondsTillBoot() - startTime < microseconds) {
 	}
+}
+
+
+TimerCallbackReturn_t callAfterDelay(void (*callback)(void), uint32_t microseconds) {
+	if (timerCallback != NULL) {
+		return previousCallbackPending;
+	}
+	uint32_t ticksToWait = (microseconds * sysClockFreqKHz) / 1000 / 16;
+	if (ticksToWait >= timerTicksPeriod) {
+		return delayTooLong;
+	} else if (ticksToWait < 5) {
+		return delayTooShort;
+	}
+	timerCallback = callback;
+	TIMER_IntClear(TIMER1, TIMER_IF_CC0);
+	uint16_t compareValue = (uint16_t)TIMER_CounterGet(TIMER1) + (uint16_t)ticksToWait - 2;
+	TIMER_CompareSet(TIMER1, 0, compareValue);
+	TIMER_IntEnable(TIMER1, TIMER_IEN_CC0);
+	return success;
 }

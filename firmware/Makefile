@@ -139,6 +139,7 @@ src/static_alloc.c \
 src/debug_hooks.c \
 src/gpio_irq.c \
 src/imu.c \
+src/leds.c \
 src/timer.c \
 src/main.c
 
