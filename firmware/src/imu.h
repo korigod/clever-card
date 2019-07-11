@@ -14,8 +14,6 @@ uint8_t RxBuffer[SPI_BUFFER_SIZE];
 
 #define IMU_RAW_QUEUE_LENGTH 1
 #define IMU_RAW_SIZE 16  // sizeof(struct ImuRaw) == 16
-static StaticQueue_t imuRawQueueDataStructure;
-static uint8_t imuRawQueueStorage[IMU_RAW_QUEUE_LENGTH * IMU_RAW_SIZE];
 struct ImuRaw {
 	int16_t acceleration[3];
 	int16_t angularVel[3];
@@ -24,8 +22,6 @@ struct ImuRaw {
 
 
 #define QUERY_IMU_STACK_SIZE configMINIMAL_STACK_SIZE
-static StaticTask_t queryIMUTaskControlBlock;
-static StackType_t queryIMUTaskStack[QUERY_IMU_STACK_SIZE];
 void queryIMU(void * pvParameters);
 
 

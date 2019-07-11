@@ -14,7 +14,7 @@
 #include "imu.h"
 #include "timer.h"
 
-DMA_DESCRIPTOR_TypeDef dmaControlBlock[2] __attribute__((aligned(256)));
+static DMA_DESCRIPTOR_TypeDef dmaControlBlock[2] __attribute__((aligned(256)));
 
 uint8_t TxBuffer[SPI_BUFFER_SIZE] = { 0xA2, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                                       0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };

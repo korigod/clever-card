@@ -8,8 +8,14 @@
 #include "timer.h"
 #include "leds.h"
 
-uint8_t currentCathode = 0xFF;  // No current cathode
-uint8_t currentLed = 0xFF;
+
+static uint32_t overflowsTillBoot;
+static uint32_t timerTicksPeriod;
+static uint32_t usecondsBeforeLastTimerOverflow;
+static void (*timerCallback)(void);
+
+static uint8_t currentCathode = 0xFF;  // No current cathode
+static uint8_t currentLed = 0xFF;
 
 
 void handleTimerOverflow(void) {
