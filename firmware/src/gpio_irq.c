@@ -8,10 +8,6 @@ void GPIO_ODD_IRQHandler(void)
 		GPIO_IntClear(1 << IMU_IRQ_GPIO_PIN);
 		xTaskNotifyFromISR(imuTaskToNotify, 0, eNoAction, NULL);
 	}
-	if (GPIO_IntGet() & (1 << LED_IRQ_GPIO_PIN)) {
-		GPIO_IntClear(1 << LED_IRQ_GPIO_PIN);
-		xTaskNotifyFromISR(ledTaskToNotify, 0, eNoAction, NULL);
-	}
 }
 
 
@@ -24,26 +20,14 @@ void enableLSM6DS3Interrupt(TaskHandle_t taskToNotify) {
 	                1); // 1 for pull-up
 
 	// Priority 6 of 7 (medium priority of three RTOS-enabled, which are 5–7)
-	NVIC_SetPriority(GPIO_ODD_IRQn, 0xDF);
+	NVIC_SetPriority(GPIO_ODD_IRQn, 6);
 
 	NVIC_EnableIRQ(GPIO_ODD_IRQn);
 
 	GPIO_ExtIntConfig(IMU_IRQ_GPIO_PORT,
 	                  0,                // unused arg
 	                  IMU_IRQ_GPIO_PIN, // interrupt line (= pin)
-	                  true,            // rising edge interrupt
-	                  false,             // falling edge interrupt
-	                  true);            // enable
-}
-
-
-void enableSoftwareLedInterrupt(TaskHandle_t taskToNotify) {
-	ledTaskToNotify = taskToNotify;
-
-	GPIO_ExtIntConfig(IMU_IRQ_GPIO_PORT,
-	                  0,                // unused arg
-	                  LED_IRQ_GPIO_PIN, // interrupt line (= pin)
-	                  false,            // rising edge interrupt
+	                  true,             // rising edge interrupt
 	                  false,            // falling edge interrupt
 	                  true);            // enable
 }
