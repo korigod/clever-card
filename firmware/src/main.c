@@ -15,9 +15,11 @@
 #include "imu.h"
 #include "gpio_irq.h"
 #include "timer.h"
+#include "leds.h"
 
 
 #define QUERY_IMU_PRIORITY 1
+#define UPDATE_LEDS_PRIORITY 2
 
 
 int main(void)
@@ -41,6 +43,16 @@ int main(void)
 	                                                QUERY_IMU_PRIORITY,
 	                                                queryIMUTaskStack,
 	                                                &queryIMUTaskControlBlock);
+
+	TaskHandle_t updateLedsHandle = xTaskCreateStatic(updateLeds,
+	                                                  (const char *)"updateLeds",
+	                                                  UPDATE_LEDS_STACK_SIZE,
+	                                                  NULL,
+	                                                  UPDATE_LEDS_PRIORITY,
+	                                                  updateLedsTaskStack,
+	                                                  &updateLedsTaskControlBlock);
+
+	enableSoftwareLedInterrupt(updateLedsHandle);
 
 	enableLSM6DS3Interrupt(queryIMUHandle);
 
