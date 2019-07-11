@@ -20,8 +20,6 @@ extern struct Led leds[LED_COUNT];
 void initLeds();
 
 #define UPDATE_LEDS_STACK_SIZE configMINIMAL_STACK_SIZE
-static StaticTask_t updateLedsTaskControlBlock;
-static StackType_t updateLedsTaskStack[UPDATE_LEDS_STACK_SIZE];
 void updateLeds(void * pvParameters);
 
 void switchOffAnodes(void);

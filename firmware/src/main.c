@@ -22,6 +22,17 @@
 #define UPDATE_LEDS_PRIORITY 1
 
 
+static StaticQueue_t imuRawQueueDataStructure;
+static uint8_t imuRawQueueStorage[IMU_RAW_QUEUE_LENGTH * IMU_RAW_SIZE];
+
+
+static StaticTask_t queryIMUTaskControlBlock;
+static StackType_t queryIMUTaskStack[QUERY_IMU_STACK_SIZE];
+
+static StaticTask_t updateLedsTaskControlBlock;
+static StackType_t updateLedsTaskStack[UPDATE_LEDS_STACK_SIZE];
+
+
 int main(void)
 {
 	CHIP_Init();

@@ -1,6 +1,8 @@
 #include "imu.h"
 #include "gpio_irq.h"
 
+static TaskHandle_t imuTaskToNotify;
+
 
 void GPIO_ODD_IRQHandler(void) 
 {
