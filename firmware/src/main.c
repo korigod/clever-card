@@ -19,7 +19,7 @@
 
 
 #define QUERY_IMU_PRIORITY 1
-#define UPDATE_LEDS_PRIORITY 2
+#define UPDATE_LEDS_PRIORITY 1
 
 
 int main(void)
@@ -51,8 +51,6 @@ int main(void)
 	                                                  UPDATE_LEDS_PRIORITY,
 	                                                  updateLedsTaskStack,
 	                                                  &updateLedsTaskControlBlock);
-
-	enableSoftwareLedInterrupt(updateLedsHandle);
 
 	enableLSM6DS3Interrupt(queryIMUHandle);
 

@@ -44,26 +44,10 @@ void switchOffAnodes() {
 }
 
 
-void switchOffLedCallback() {
-	switchOffAnodes();
-	GPIO_IntSet(1 << LED_IRQ_GPIO_PIN);
-}
-
-
 void updateLeds(void * pvParameters) {
-	uint8_t currentCathode = 0xFF;  // No current cathode
-	for (int i = 0; ; i++) {
-		if (i >= LED_COUNT) {
-			i = 0;
-		}
-		if (leds[i].cathode != currentCathode) {
-			resetCathodes();
-			taskYIELD();
-			enableCathode(leds[i].cathode);
-			currentCathode = leds[i].cathode;
-		}
-		callAfterDelay(switchOffLedCallback, 10);
-		GPIO->P[gpioPortA].DOUTSET = 1 << leds[i].anode;
-		xTaskNotifyWait(0, 0, NULL, 2);
+	TickType_t previousWakeTime = xTaskGetTickCount();
+	for ( ;; ) {
+		vTaskDelayUntil(&previousWakeTime, pdMS_TO_TICKS(1000 / LED_FPS));
+		triggerLedsUpdateCycle();
 	}
 }

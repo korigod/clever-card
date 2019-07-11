@@ -6,23 +6,52 @@
 #include "task.h"
 
 #include "timer.h"
+#include "leds.h"
+
+uint8_t currentCathode = 0xFF;  // No current cathode
+uint8_t currentLed = 0xFF;
+
+
+void handleTimerOverflow(void) {
+	TIMER_IntClear(TIMER1, TIMER_IF_OF);
+	overflowsTillBoot += 1;
+
+	usecondsBeforeLastTimerOverflow =
+		((uint64_t)overflowsTillBoot * timerTicksPeriod * 16 * 1000000) / sysClockFreq;
+}
 
 
 void TIMER1_IRQHandler(void) {
 	if (TIMER_IntGet(TIMER1) & TIMER_IF_CC0) {
-		if (timerCallback != NULL) {
-			timerCallback();
-			timerCallback = NULL;
-		}
-		TIMER_IntClear(TIMER1, TIMER_IF_CC0);
-		TIMER_IntDisable(TIMER1, TIMER_IEN_CC0);
-	}
-	if (TIMER_IntGet(TIMER1) & TIMER_IF_OF) {
-		TIMER_IntClear(TIMER1, TIMER_IF_OF);
-		overflowsTillBoot += 1;
+		switchOffAnodes();
 
-		usecondsBeforeLastTimerOverflow =
-			((uint64_t)overflowsTillBoot * timerTicksPeriod * 16 * 1000000) / sysClockFreq;
+		TIMER_IntClear(TIMER1, TIMER_IF_CC0);
+
+		// We check it here to prevent jitter of the LED on time if
+		// both flags are being processed in the same ISR call
+		if (TIMER_IntGet(TIMER1) & TIMER_IF_OF) {
+			handleTimerOverflow();
+		}
+
+		currentLed++;
+		if (currentLed >= LED_COUNT) {
+			currentLed = 0xFF;
+			resetCathodes();
+			TIMER_IntDisable(TIMER1, TIMER_IF_CC0);
+			return;
+		}
+		if (leds[currentLed].cathode != currentCathode) {
+			resetCathodes();
+			enableCathode(leds[currentLed].cathode);
+			currentCathode = leds[currentLed].cathode;
+		}
+		uint8_t ticksToWait = 10;
+		uint16_t switchOffTime = (uint16_t)TIMER_CounterGet(TIMER1) + ticksToWait;
+		TIMER_CompareSet(TIMER1, 0, switchOffTime);
+		GPIO->P[gpioPortA].DOUTSET = 1 << leds[currentLed].anode;
+
+	} else if (TIMER_IntGet(TIMER1) & TIMER_IF_OF) {
+		handleTimerOverflow();
 	}
 }
 
@@ -90,20 +119,11 @@ void delayMicroseconds(uint32_t microseconds) {
 }
 
 
-TimerCallbackReturn_t callAfterDelay(void (*callback)(void), uint32_t microseconds) {
-	if (timerCallback != NULL) {
-		return previousCallbackPending;
-	}
-	uint32_t ticksToWait = (microseconds * sysClockFreqKHz) / 1000 / 16;
-	if (ticksToWait >= timerTicksPeriod) {
-		return delayTooLong;
-	} else if (ticksToWait < 5) {
-		return delayTooShort;
-	}
-	timerCallback = callback;
-	TIMER_IntClear(TIMER1, TIMER_IF_CC0);
-	uint16_t compareValue = (uint16_t)TIMER_CounterGet(TIMER1) + (uint16_t)ticksToWait - 2;
-	TIMER_CompareSet(TIMER1, 0, compareValue);
+void triggerLedsUpdateCycle(void) {
+	// If we set the flag after we enable the interrupt, then we must be
+	// certain that the flag is not set at the moment of enabling, otherwise
+	// the ISR will be executed twice: immediately after it's enabled and
+	// when the flag is set. So it's easier just to set the flag beforehand.
+	TIMER_IntSet(TIMER1, TIMER_IF_CC0);
 	TIMER_IntEnable(TIMER1, TIMER_IEN_CC0);
-	return success;
 }

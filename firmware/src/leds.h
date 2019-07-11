@@ -1,6 +1,7 @@
 #include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 
+#define LED_FPS 50
 #define LED_COUNT 4
 
 enum LedColor {
@@ -22,3 +23,7 @@ void initLeds();
 static StaticTask_t updateLedsTaskControlBlock;
 static StackType_t updateLedsTaskStack[UPDATE_LEDS_STACK_SIZE];
 void updateLeds(void * pvParameters);
+
+void switchOffAnodes(void);
+void resetCathodes(void);
+void enableCathode(uint8_t cathode);
