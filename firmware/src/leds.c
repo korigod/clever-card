@@ -23,7 +23,7 @@ void initLeds(void) {
 void resetCathodes() {
 	// The whole high half of port E (pins 8—15) are cathode lines
 	GPIO->P[gpioPortE].MODEH = 0x0;
-	
+
 	// Only pins 2—5 of port F are cathodes, so we preserve the mode of the others
 	GPIO->P[gpioPortF].MODEL &= 0xFF0000FF;
 }
