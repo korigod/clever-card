@@ -8,8 +8,8 @@
 #include "timer.h"
 #include "gpio_irq.h"
 
-struct Led leds[LED_COUNT] = { { 3, 10, red }, { 3, 11, green },
-                               { 4, 10, red }, { 4, 11, green } };
+struct Led leds[LED_COUNT * 2] = { { 3, 10, 10 }, { 3, 11, 10 },
+                                 { 4, 10, 10 }, { 4, 11, 10 } };
 
 
 void initLeds(void) {
