@@ -31,14 +31,14 @@ extern "C" {
 
 /* Main functions*/
 #define configUSE_PREEMPTION					( 0 )
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION	( 0 )
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION	( 1 )
 #define configSUPPORT_STATIC_ALLOCATION			( 1 )
 #define configSUPPORT_DYNAMIC_ALLOCATION		( 0 )
 #define configCPU_CLOCK_HZ						((unsigned long) 14000000)
 #define configMAX_PRIORITIES					( 3 )
 #define configMINIMAL_STACK_SIZE				((StackType_t) 64)
 #define configTOTAL_HEAP_SIZE					( 0 )
-#define configMAX_TASK_NAME_LEN					( 10 )
+#define configMAX_TASK_NAME_LEN					( 12 )
 #define configUSE_TRACE_FACILITY				( 1 )
 #define configUSE_STATS_FORMATTING_FUNCTIONS	( 0 )
 #define configUSE_16_BIT_TICKS					( 0 )
@@ -105,7 +105,7 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 #define INCLUDE_xTimerPendFunctionCall			( 1 )
 
 /* Stop if an assertion fails. */
-#define configASSERT( x )	if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
+//#define configASSERT( x )	if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */
