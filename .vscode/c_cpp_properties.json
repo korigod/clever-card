@@ -12,7 +12,10 @@
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc",
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emdrv/**",
                 "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include",
-                "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3"
+                "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3",
+                "/var/lib/gems/2.3.0/gems/ceedling-0.28.3/vendor/unity/src",
+                "firmware/build/test/mocks",
+                "firmware/src"
             ],
             "defines": [
                 "EFM32LG990F256"
