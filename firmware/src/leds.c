@@ -9,7 +9,7 @@
 #include "gpio_irq.h"
 
 struct Led leds[LED_COUNT * 2] = { { 3, 10, 10 }, { 3, 11, 10 },
-                                 { 4, 10, 10 }, { 4, 11, 10 } };
+                                   { 4, 10, 10 }, { 4, 11, 10 } };
 
 
 void initLeds(void) {
