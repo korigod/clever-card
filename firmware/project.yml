@@ -20,6 +20,7 @@
     - -:test/support
   :source:
     - src
+    - vendor/fake_function_framework
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include/sys"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/lib/**"
@@ -79,4 +80,5 @@
     - module_generator
     - gcov
     - xml_tests_report
+    - fake_function_framework
 ...

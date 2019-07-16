@@ -14,6 +14,7 @@
                 "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include",
                 "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3",
                 "/var/lib/gems/2.3.0/gems/ceedling-0.28.3/vendor/unity/src",
+                "firmware/vendor/**",
                 "firmware/build/test/mocks",
                 "firmware/src"
             ],
