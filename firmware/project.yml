@@ -20,11 +20,10 @@
     - -:test/support
   :source:
     - src
+    - test/support
     - vendor/fake_function_framework
-    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include"
-    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/include/sys"
-    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/lib/**"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Include"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/src"
