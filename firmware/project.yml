@@ -1,0 +1,59 @@
+---
+:project:
+  :use_exceptions: FALSE
+  :use_test_preprocessor: TRUE
+  :use_auxiliary_dependencies: TRUE
+  :build_root: build
+  :test_file_prefix: test_
+  :which_ceedling: gem
+  :default_tasks:
+    - test:all
+
+:environment:
+
+:extension:
+  :executable: .out
+
+:paths:
+  :test:
+    - +:test/**
+    - -:test/support
+  :source:
+    - src
+    - test/support
+    - vendor/fake_function_framework
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Include"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/src"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emdrv/**"
+    - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source"
+    - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include"
+    - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3"
+  :support:
+    - test/support
+
+:defines:
+  :common: &common_defines
+    - EFM32LG990F256
+    - TEST
+  :test:
+    - *common_defines
+  :test_preprocess:
+    - *common_defines
+
+:gcov:
+    :html_report_type: basic
+
+:plugins:
+  :load_paths:
+    - "#{Ceedling.load_path}"
+    - vendor/ceedling/plugins
+  :enabled:
+    - stdout_pretty_tests_report
+    - module_generator
+    - gcov
+    - xml_tests_report
+    - fake_function_framework
+...
