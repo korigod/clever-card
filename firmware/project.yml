@@ -20,7 +20,6 @@
     - -:test/support
   :source:
     - src
-    - test/support
     - vendor/fake_function_framework
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG"
