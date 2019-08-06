@@ -23,18 +23,3 @@ void setUp(void) {
 
 void tearDown(void) {
 }
-
-
-void test_initLeds_rightAnodesAreInitialized(void) {
-	initLeds();
-
-	GPIO_TypeDef gpioResult = gpio;
-
-	resetRegisters();
-
-	for (int i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
-		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPull, 0);
-	}
-
-	TEST_ASSERT_EQUAL_MEMORY(&gpio, &gpioResult, sizeof(GPIO_TypeDef));
-}
