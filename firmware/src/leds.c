@@ -5,7 +5,7 @@
 
 
 void initLeds(void) {
-	for (int i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
+	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
 		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPull, 0);
 	}
 }
@@ -13,7 +13,7 @@ void initLeds(void) {
 void disableLeds(void) {
 	switchOffCathodes();
 
-	for (int i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
+	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
 		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModeDisabled, 0);
 	}
 }
