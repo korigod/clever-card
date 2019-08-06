@@ -14,6 +14,7 @@ struct LedCathode {
 };
 
 void initLeds(void);
+void disableLeds(void);
 
 void switchOnAnode(struct LedAnode anode);
 void switchOffAnodes(void);
