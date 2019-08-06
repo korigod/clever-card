@@ -36,5 +36,5 @@ void test_initLeds_rightAnodesAreInitialized(void) {
 		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPull, 0);
 	}
 
-	TEST_ASSERT(memcmp(&gpio, &gpioResult, sizeof(GPIO_TypeDef)) == 0);
+	TEST_ASSERT_EQUAL_MEMORY(&gpio, &gpioResult, sizeof(GPIO_TypeDef));
 }
