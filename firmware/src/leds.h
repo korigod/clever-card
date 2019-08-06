@@ -19,4 +19,7 @@ void disableLeds(void);
 void switchOnAnode(struct LedAnode anode);
 void switchOffAnodes(void);
 
+void switchOnCathode(struct LedCathode cathode);
+void switchOffCathodes(void);
+
 #endif /* LEDS_H_INC */
