@@ -15,4 +15,7 @@ struct LedCathode {
 
 void initLeds(void);
 
+void switchOnAnode(struct LedAnode anode);
+void switchOffAnodes(void);
+
 #endif /* LEDS_H_INC */
