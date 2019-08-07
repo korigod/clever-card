@@ -3,7 +3,7 @@
 
 #include "em_gpio.h"
 
-#include "led_driver.h"
+#include "leds.h"
 
 static const struct LedAnode ledAnodes[] = {
 	{gpioPortA, 0},
