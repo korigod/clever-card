@@ -32,6 +32,4 @@ static const struct LedCathode ledCathodes[] = {
 	{gpioPortF, 5}
 };
 
-void initLeds();
-
 #endif /* BOARD_H_INC */
