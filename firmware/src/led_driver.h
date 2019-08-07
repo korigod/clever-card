@@ -1,5 +1,5 @@
-#ifndef LEDS_H_INC
-#define LEDS_H_INC
+#ifndef LED_DRIVER_H_INC
+#define LED_DRIVER_H_INC
 
 #include "em_gpio.h"
 
@@ -22,4 +22,4 @@ void switchOffAnodes(void);
 void switchOnCathode(struct LedCathode cathode);
 void switchOffCathodes(void);
 
-#endif /* LEDS_H_INC */
+#endif /* LED_DRIVER_H_INC */
