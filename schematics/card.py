@@ -143,6 +143,8 @@ def bicolor_led_matrix(led_template, anodes, cathodes, led_count=None):
         ):
             led = led_template()
             led['K'] += cathode_string
+
+            # Anode lines are partially swapped here to make layout easier
             if cathode_index < len(cathodes) / 2:
                 led['A1'] += first_anode_string
                 led['A2'] += second_anode_string
