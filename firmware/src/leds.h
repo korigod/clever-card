@@ -13,4 +13,9 @@ struct LedCathode {
 	uint8_t id : 4;
 };
 
+struct LedWires {
+	struct LedAnode anode;
+	struct LedCathode cathode;
+};
+
 #endif /* LEDS_H_INC */
