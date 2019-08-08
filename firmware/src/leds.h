@@ -20,8 +20,8 @@ struct LedWires {
 	struct LedCathode cathode;
 };
 
-uint8_t ledOutputsLatched[rgLedCount * 2];
-uint8_t ledOutputs[rgLedCount * 2];
+uint8_t ledOutputsLatched[ledCount];
+uint8_t ledOutputs[ledCount];
 
 void latchLedOutputs(void);
 

@@ -6,6 +6,7 @@
 #include "leds.h"
 
 const uint8_t rgLedCount = 49;
+const uint8_t ledCount = rgLedCount * 2;
 
 static const struct LedAnode ledAnodes[] = {
 	{gpioPortA, 0},
@@ -34,7 +35,7 @@ static const struct LedCathode ledCathodes[] = {
 	{gpioPortF, 5}
 };
 
-static const struct LedWires ledWires[rgLedCount * 2] = {
+static const struct LedWires ledWires[ledCount] = {
 	{ledAnodes[0], ledCathodes[0]},
 	{ledAnodes[1], ledCathodes[0]},
 	{ledAnodes[2], ledCathodes[0]},
