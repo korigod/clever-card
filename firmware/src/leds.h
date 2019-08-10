@@ -23,6 +23,8 @@ struct LedWires {
 uint8_t ledOutputsLatched[ledCount];
 uint8_t ledOutputs[ledCount];
 
+bool cathodesAreEqual(struct LedCathode a, struct LedCathode b);
+
 void latchLedOutputs(void);
 
 #endif /* LEDS_H_INC */
