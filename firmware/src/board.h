@@ -35,7 +35,7 @@ static const struct LedCathode ledCathodes[] = {
 	{gpioPortF, 5}
 };
 
-static const struct LedWires ledWires[ledCount] = {
+static const struct LedPins ledPins[ledCount] = {
 	{ledAnodes[0], ledCathodes[0]},
 	{ledAnodes[1], ledCathodes[0]},
 	{ledAnodes[2], ledCathodes[0]},
