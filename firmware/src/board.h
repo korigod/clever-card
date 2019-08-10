@@ -5,8 +5,8 @@
 
 #include "leds.h"
 
-const uint8_t rgLedCount = 49;
-const uint8_t ledCount = rgLedCount * 2;
+#define RG_LED_COUNT 49
+#define LED_COUNT (RG_LED_COUNT * 2)
 
 static const struct LedAnode ledAnodes[] = {
 	{gpioPortA, 0},

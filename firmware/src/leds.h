@@ -25,8 +25,8 @@ enum SwitchOnNextLedStatus {
 	NO_MORE_LEDS
 };
 
-uint8_t ledOutputsLatched[ledCount];
-uint8_t ledOutputs[ledCount];
+uint8_t ledOutputsLatched[LED_COUNT];
+uint8_t ledOutputs[LED_COUNT];
 
 #define INVALID_LED UINT8_MAX
 uint8_t currentLedIndex = INVALID_LED;

@@ -19,7 +19,7 @@ enum SwitchOnNextLedStatus switchOnNextLed(bool loopIndefinitely) {
 
 	do {
 		currentLedIndex++;
-		if (currentLedIndex >= ledCount) {
+		if (currentLedIndex >= LED_COUNT) {
 			if (loopIndefinitely) {
 				currentLedIndex = 0;
 			} else {
