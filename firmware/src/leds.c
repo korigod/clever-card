@@ -1,7 +1,14 @@
 #include <string.h>
 
+#include "board.h"
 #include "leds.h"
 #include "led_driver.h"
+
+const uint8_t INVALID_LED = UINT8_MAX;
+uint8_t currentLedIndex = UINT8_MAX;
+
+uint8_t ledOutputsLatched[LED_COUNT] = {0};
+uint8_t ledOutputs[LED_COUNT] = {0};
 
 
 bool anodesAreEqual(struct LedAnode a, struct LedAnode b) {
@@ -17,13 +24,25 @@ bool ledPinsAreEqual(struct LedPins a, struct LedPins b) {
 }
 
 
+void initializeLeds(void) {
+	currentLedIndex = INVALID_LED;
+	for (int i = 0; i < LED_COUNT; i++) {
+		ledOutputs[i] = 0;
+		ledOutputsLatched[i] = 0;
+	}
+	initLeds();
+	switchOffCathodes();
+}
+
+
 // Must be called from a critical section or protected with mutex
 void latchLedOutputs(void) {
+	//ASSERT(sizeof(ledOutputs) == sizeof(ledOutputsLatched));
 	memcpy(ledOutputsLatched, ledOutputs, sizeof(ledOutputs));
 }
 
 
-enum SwitchOnNextLedStatus switchOnNextLed(bool loopIndefinitely) {
+struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 	uint8_t previousLedIndex = currentLedIndex;
 
 	do {
@@ -31,10 +50,12 @@ enum SwitchOnNextLedStatus switchOnNextLed(bool loopIndefinitely) {
 		if (currentLedIndex >= LED_COUNT) {
 			if (loopIndefinitely) {
 				currentLedIndex = 0;
+				loopIndefinitely = false;
 			} else {
 				currentLedIndex = INVALID_LED;
 				switchOffCathodes();
-				return NO_MORE_LEDS;
+				struct PrepareNextLedResult result = {NO_MORE_LEDS, {{0, 0}, {0, 0}}, 0};
+				return result;
 			}
 		}
 		// We iterate to skip LEDs with zero brightness
@@ -48,8 +69,15 @@ enum SwitchOnNextLedStatus switchOnNextLed(bool loopIndefinitely) {
 		switchOnCathode(ledPins[currentLedIndex].cathode);
 	}
 
-	uint16_t ticksToWait = 5 * ledOutputsLatched[currentLedIndex];
-	// setTimerToWaitTicks(ticksToWait);
-	switchOnAnode(ledPins[currentLedIndex].anode);
-	return SUCCESS;
+	uint16_t ticksToKeepLedOn = 5 * ledOutputsLatched[currentLedIndex];
+
+	struct PrepareNextLedResult result = {
+		SUCCESS, ledPins[currentLedIndex], ticksToKeepLedOn
+	};
+	return result;
+}
+
+
+void switchOnPreparedLed(struct LedPins led) {
+	switchOnAnode(led.anode);
 }
