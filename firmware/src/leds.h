@@ -31,7 +31,6 @@ uint8_t ledOutputs[LED_COUNT];
 #define INVALID_LED UINT8_MAX
 uint8_t currentLedIndex = INVALID_LED;
 
-bool cathodesAreEqual(struct LedCathode a, struct LedCathode b);
 
 void latchLedOutputs(void);
 

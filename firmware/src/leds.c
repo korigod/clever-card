@@ -3,8 +3,17 @@
 #include "leds.h"
 #include "led_driver.h"
 
+
+bool anodesAreEqual(struct LedAnode a, struct LedAnode b) {
+	return (a.id == b.id) && (a.port == b.port);
+}
+
 bool cathodesAreEqual(struct LedCathode a, struct LedCathode b) {
 	return (a.id == b.id) && (a.port == b.port);
+}
+
+bool ledPinsAreEqual(struct LedPins a, struct LedPins b) {
+	return (anodesAreEqual(a.anode, b.anode)) && (cathodesAreEqual(a.cathode, b.cathode));
 }
 
 
