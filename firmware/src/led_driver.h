@@ -3,7 +3,7 @@
 
 #include "leds.h"
 
-void initLeds(void);
+void initializeLedDriver(void);
 void disableLeds(void);
 
 void switchOnAnode(struct LedAnode anode);

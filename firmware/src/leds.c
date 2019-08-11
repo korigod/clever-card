@@ -30,7 +30,7 @@ void initializeLeds(void) {
 		ledOutputs[i] = 0;
 		ledOutputsLatched[i] = 0;
 	}
-	initLeds();
+	initializeLedDriver();
 	switchOffCathodes();
 }
 

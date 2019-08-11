@@ -4,7 +4,7 @@
 #include "board.h"
 
 
-void initLeds(void) {
+void initializeLedDriver(void) {
 	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
 		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPull, 0);
 	}
