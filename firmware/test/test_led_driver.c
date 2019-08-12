@@ -8,7 +8,7 @@
 
 
 GPIO_TypeDef gpio;
-GPIO_TypeDef * gpioBase = &gpio;
+GPIO_TypeDef *gpioBase = &gpio;
 
 
 void resetRegisters(void) {
@@ -16,7 +16,7 @@ void resetRegisters(void) {
 }
 
 
-void processGpioSetClearToggle(GPIO_TypeDef * gpio) {
+void processGpioSetClearToggle(GPIO_TypeDef *gpio) {
 	for (int i = 0; i < sizeof(gpio->P) / sizeof(gpio->P[0]); i++) {
 		GPIO->P[i].DOUT |= GPIO->P[i].DOUTSET;
 		GPIO->P[i].DOUTSET = 0;

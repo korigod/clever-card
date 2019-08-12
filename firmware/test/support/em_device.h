@@ -3,4 +3,4 @@
 
 #undef GPIO_BASE
 #define GPIO_BASE gpioBase
-GPIO_TypeDef * gpioBase;
+GPIO_TypeDef *gpioBase;

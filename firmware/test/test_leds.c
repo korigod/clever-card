@@ -16,7 +16,7 @@ extern bool ledPinsAreEqual(struct LedPins a, struct LedPins b);
 
 
 GPIO_TypeDef gpio;
-GPIO_TypeDef * gpioBase = &gpio;
+GPIO_TypeDef *gpioBase = &gpio;
 
 
 void setAllLedOutputs(uint8_t output_value) {
@@ -97,6 +97,15 @@ void test_prepareNextLed_whenLoopDisabled_returnsNoMoreLeds(void) {
 	struct PrepareNextLedResult result = prepareNextLed(false);
 
 	TEST_ASSERT_EQUAL(NO_MORE_LEDS, result.status);
+}
+
+void test_prepareNextLed_whenNoMoreLeds_currentLedIsSetInvalid(void) {
+	currentLedIndex = 50;
+	ledOutputsLatched[1] = 30;
+
+	struct PrepareNextLedResult result = prepareNextLed(false);
+
+	TEST_ASSERT_EQUAL(INVALID_LED, currentLedIndex);
 }
 
 void test_prepareNextLed_whenAllLedsHaveZeroBrightness_noInfiniteLoop(void) {
