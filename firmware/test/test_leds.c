@@ -66,6 +66,7 @@ void test_initializeLeds_afterInitialization_noLedIsChosenToSwitchOn(void) {
 void test_prepareNextLed_whenCurrentLedInvalid_firstLedSwitchedOn(void) {
 	currentLedIndex = INVALID_LED;
 	ledOutputsLatched[0] = 30;
+	ledOutputs[0] = 30;
 
 	struct PrepareNextLedResult result = prepareNextLed(true);
 
@@ -76,6 +77,7 @@ void test_prepareNextLed_whenCurrentLedInvalid_firstLedSwitchedOn(void) {
 void test_prepareNextLed_zeroBrightnessLedSkipped(void) {
 	currentLedIndex = INVALID_LED;
 	ledOutputsLatched[1] = 30;
+	ledOutputs[1] = 30;
 
 	struct PrepareNextLedResult result = prepareNextLed(true);
 
@@ -86,6 +88,7 @@ void test_prepareNextLed_zeroBrightnessLedSkipped(void) {
 void test_prepareNextLed_whenLoopEnabled_loops(void) {
 	currentLedIndex = 50;
 	ledOutputsLatched[1] = 30;
+	ledOutputs[1] = 30;
 
 	struct PrepareNextLedResult result = prepareNextLed(true);
 
@@ -96,6 +99,7 @@ void test_prepareNextLed_whenLoopEnabled_loops(void) {
 void test_prepareNextLed_whenLoopDisabled_returnsNoMoreLeds(void) {
 	currentLedIndex = 50;
 	ledOutputsLatched[1] = 30;
+	ledOutputs[1] = 30;
 
 	struct PrepareNextLedResult result = prepareNextLed(false);
 
@@ -105,6 +109,7 @@ void test_prepareNextLed_whenLoopDisabled_returnsNoMoreLeds(void) {
 void test_prepareNextLed_whenNoMoreLeds_currentLedIsSetInvalid(void) {
 	currentLedIndex = 50;
 	ledOutputsLatched[1] = 30;
+	ledOutputs[1] = 30;
 
 	struct PrepareNextLedResult result = prepareNextLed(false);
 

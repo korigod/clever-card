@@ -58,6 +58,9 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 				return result;
 			}
 		}
+		if (currentLedIndex == 0) {
+			latchLedOutputs();
+		}
 		// We iterate to skip LEDs with zero brightness
 	} while (ledOutputsLatched[currentLedIndex] == 0);
 
