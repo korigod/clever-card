@@ -42,6 +42,15 @@
   :test_preprocess:
     - *common_defines
 
+:flags:
+  :test:
+    :compile:
+      :*:
+        - -Wall
+        - -Wno-int-to-pointer-cast
+        - -Wno-pointer-to-int-cast
+        - -Wno-overflow
+
 :gcov:
     :html_report_type: basic
 
