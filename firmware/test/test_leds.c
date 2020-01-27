@@ -2,11 +2,14 @@
 #include <stdio.h>
 #include "em_gpio.h"
 #include "unity.h"
+#include "fff.h"
 
 #include "board.h"
 #include "leds.h"
 
 TEST_FILE("led_driver.c")
+
+FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool);
 
 extern uint8_t currentLedIndex;
 extern const uint8_t INVALID_LED;

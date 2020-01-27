@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include "em_gpio.h"
 #include "unity.h"
+#include "fff.h"
 
 #include "board.h"
 #include "led_driver.h"
 
+FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool);
 
 GPIO_TypeDef gpio;
 GPIO_TypeDef *gpioBase = &gpio;
@@ -41,6 +43,7 @@ void tearDown(void) {
 
 void test_switchOffAnodes_rightPinsAreCleared(void) {
 	switchOffAnodes();
+	processGpioSetClearToggle(&gpio);
 
 	GPIO_TypeDef gpioResult = gpio;
 	resetRegisters();
@@ -48,8 +51,44 @@ void test_switchOffAnodes_rightPinsAreCleared(void) {
 	for (int i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
 		GPIO->P[ledAnodes[i].port].DOUTCLR |= 1 << ledAnodes[i].id;
 	}
+	processGpioSetClearToggle(&gpio);
 
 	TEST_ASSERT_EQUAL_MEMORY(&gpio, &gpioResult, sizeof(GPIO_TypeDef));
+}
+
+void test_switchOffAnodes_pinsAreDisabled(void) {
+	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
+		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPullDrive, 0);
+	}
+
+	switchOffAnodes();
+
+	processGpioSetClearToggle(&gpio);
+	GPIO_TypeDef gpioResult = gpio;
+	resetRegisters();
+
+	TEST_ASSERT_EQUAL_MEMORY(&gpio, &gpioResult, sizeof(GPIO_TypeDef));
+}
+
+void test_switchOffAnodes_otherPinsAreIntact(void) {
+	for (int port = 0; port < sizeof(gpio.P) / sizeof(gpio.P[0]); port++) {
+		for (int i = 0; i < 16; i++) {
+			GPIO_PinModeSet(port, i, gpioModePushPullDrive, 1);
+		}
+	}
+	processGpioSetClearToggle(&gpio);
+
+	for (int i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
+		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModeDisabled, 0);
+	}
+	processGpioSetClearToggle(&gpio);
+
+	GPIO_TypeDef gpioToBePreserved = gpio;
+
+	switchOffAnodes();
+	processGpioSetClearToggle(&gpio);
+
+	TEST_ASSERT_EQUAL_MEMORY(&gpioToBePreserved, &gpio, sizeof(GPIO_TypeDef));
 }
 
 
@@ -61,7 +100,6 @@ void test_switchOffCathodes_pinsAreDisabled(void) {
 	switchOffCathodes();
 
 	processGpioSetClearToggle(&gpio);
-
 	GPIO_TypeDef gpioResult = gpio;
 	resetRegisters();
 

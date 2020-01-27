@@ -1,31 +1,37 @@
 #include "em_gpio.h"
+#include "em_cmu.h"
 
 #include "led_driver.h"
 #include "board.h"
 
 
 void initializeLedDriver(void) {
+	CMU_ClockEnable(cmuClock_GPIO, true);
+
 	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
-		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPull, 0);
+		GPIO_DriveModeSet(ledAnodes[i].port, gpioDriveModeStandard);
 	}
 }
 
 void disableLeds(void) {
+	switchOffAnodes();
 	switchOffCathodes();
-
-	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
-		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModeDisabled, 0);
-	}
 }
 
 
 void switchOnAnode(struct LedAnode anode) {
-	GPIO->P[anode.port].DOUTSET = 1 << anode.id;
+	GPIO_PinModeSet(anode.port, anode.id, gpioModePushPullDrive, 1);
 }
 
 void switchOffAnodes(void) {
 	// Anodes are pins 0–5 and 8–10 of port A
+
+	// This registry write switches the leds off immediately and simulteneously, then we
+	// disable the pins to minimize possible problems if some lines was short-curcuited
 	GPIO->P[gpioPortA].DOUTCLR = 0x73F;  // 11100111111b
+
+	GPIO->P[gpioPortA].MODEL &= 0xFF000000;
+	GPIO->P[gpioPortA].MODEH &= 0xFFFFF000;
 }
 
 
