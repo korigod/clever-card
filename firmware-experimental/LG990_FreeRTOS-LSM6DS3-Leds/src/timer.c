@@ -1,8 +1,8 @@
 #include "em_cmu.h"
 #include "em_timer.h"
 
-#include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
+#include "FreeRTOS.h"
 #include "task.h"
 
 #include "timer.h"
