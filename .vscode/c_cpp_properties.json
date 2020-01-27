@@ -9,7 +9,11 @@
                 "~/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/arm-none-eabi/lib/**",
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include",
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Include",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32TG/Include",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32TG",
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc",
+                "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/src",
                 "~/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emdrv/**",
                 "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include",
                 "~/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3",
@@ -17,7 +21,8 @@
                 "firmware/**"
             ],
             "defines": [
-                "EFM32LG990F256"
+                "EFM32LG990F256",
+                "EFM32TG232F32"
             ],
             "cStandard": "c99"
         }

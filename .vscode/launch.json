@@ -8,8 +8,8 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
-            "device": "EFM32LG990F256",
-            "svdFile": "EFM32LG990F256.svd",
+            "device": "EFM32TG232F32",
+            "svdFile": "EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make firmware"
         },
@@ -20,8 +20,8 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
-            "device": "EFM32LG990F256",
-            "svdFile": "EFM32LG990F256.svd",
+            "device": "EFM32TG232F32",
+            "svdFile": "EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make release firmware"
         },
