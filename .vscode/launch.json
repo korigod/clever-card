@@ -47,6 +47,30 @@
             "device": "EFM32LG990F256",
             "svdFile": "EFM32LG990F256.svd",
             "preLaunchTask": "make LG990_LSM6DS3"
+        },
+        {
+            "name": "EFM32TG232 SWO printf",
+            "cwd": "${workspaceRoot}/firmware-experimental/TG232_SWO",
+            "executable": "./build/Debug/exe/TG232_SWO.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32TG232F32",
+            "svdFile": "EFM32TG232F32.svd",
+            "preLaunchTask": "make TG232_SWO",
+            "swoConfig": {
+                "source": "probe",
+                "enabled": true,
+                "cpuFrequency": 14000000,
+                "swoFrequency": 2000000,
+                "decoders": [
+                    {
+                        "port": 0,
+                        "label": "Output",
+                        "type": "console"
+                    }
+                ]
+            }
         }
     ]
 }

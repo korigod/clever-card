@@ -42,6 +42,15 @@
                 "cwd": "firmware-experimental/LG990_LSM6DS3"
             },
             "group": "build"
+        },
+        {
+            "label": "make TG232_SWO",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "firmware-experimental/TG232_SWO"
+            },
+            "group": "build"
         }
     ]
 }
