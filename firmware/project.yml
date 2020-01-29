@@ -3,6 +3,7 @@
   :use_exceptions: FALSE
   :use_test_preprocessor: TRUE
   :use_auxiliary_dependencies: TRUE
+  :auto_link_deep_dependencies: FALSE
   :build_root: build
   :test_file_prefix: test_
   :which_ceedling: gem
@@ -16,8 +17,9 @@
 
 :paths:
   :test:
-    - +:test/**
-    - -:test/support
+    - test/**
+    - -:test/target
+    - -:test/support/**
   :source:
     - src
     - vendor/fake_function_framework
@@ -32,6 +34,7 @@
     - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3"
   :support:
     - test/support
+    - test/support/local
 
 :defines:
   :common: &common_defines

@@ -4,12 +4,15 @@
 #include "unity.h"
 #include "fff.h"
 
+#include "test_common.h"
 #include "board.h"
 #include "leds.h"
 
 TEST_FILE("led_driver.c")
 
-FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool);
+#ifndef TEST_TARGET
+	FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool)
+#endif
 
 extern uint8_t currentLedIndex;
 extern const uint8_t INVALID_LED;

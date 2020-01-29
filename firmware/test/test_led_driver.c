@@ -4,10 +4,13 @@
 #include "unity.h"
 #include "fff.h"
 
+#include "test_common.h"
 #include "board.h"
 #include "led_driver.h"
 
-FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool);
+#ifndef TEST_TARGET
+	FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool)
+#endif
 
 GPIO_TypeDef gpio;
 GPIO_TypeDef *gpioBase = &gpio;
