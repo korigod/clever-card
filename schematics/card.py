@@ -69,14 +69,14 @@ def efm_debugging_interface(efm32xx232, connector_10_pins, vdd, gnd):
     # Pinout is compatible with EFM Mini Simplicity Connector
     connector_10_pins[1] += vdd
     connector_10_pins[2] += gnd
-    connector_10_pins[3] += mcu['RESET']
-    connector_10_pins[4] += mcu['US0_RX_#5']
-    connector_10_pins[5] += mcu['US0_TX_#5']
-    connector_10_pins[6] += mcu['DBG_SWO_#1']
-    connector_10_pins[7] += mcu['DBG_SWDIO']
-    connector_10_pins[8] += mcu['DBG_SWCLK']
-    connector_10_pins[9] += mcu['ETM_TCLK_#0']
-    connector_10_pins[10] += mcu['ETM_TD0_#0']
+    connector_10_pins[3] += efm32xx232['RESET']
+    connector_10_pins[4] += efm32xx232['US0_RX_#5']
+    connector_10_pins[5] += efm32xx232['US0_TX_#5']
+    connector_10_pins[6] += efm32xx232['DBG_SWO_#1']
+    connector_10_pins[7] += efm32xx232['DBG_SWDIO']
+    connector_10_pins[8] += efm32xx232['DBG_SWCLK']
+    connector_10_pins[9] += efm32xx232['ETM_TCLK_#0']
+    connector_10_pins[10] += efm32xx232['ETM_TD0_#0']
 
 
 def efm_lfxo(efm32, crystal, gnd):
