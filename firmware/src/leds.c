@@ -4,6 +4,8 @@
 #include "leds.h"
 #include "led_driver.h"
 
+#define MIN_TICKS_TO_KEEP_LED_ON 6
+
 const uint8_t INVALID_LED = UINT8_MAX;
 uint8_t currentLedIndex = UINT8_MAX;
 
@@ -72,7 +74,7 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 		switchOnCathode(ledPins[currentLedIndex].cathode);
 	}
 
-	uint16_t ticksToKeepLedOn = 5 * ledOutputsLatched[currentLedIndex];
+	uint16_t ticksToKeepLedOn = MIN_TICKS_TO_KEEP_LED_ON * ledOutputsLatched[currentLedIndex];
 
 	struct PrepareNextLedResult result = {
 		SUCCESS, ledPins[currentLedIndex], ticksToKeepLedOn
