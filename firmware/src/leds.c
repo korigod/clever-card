@@ -74,7 +74,7 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 		switchOnCathode(ledPins[currentLedIndex].cathode);
 	}
 
-	uint16_t ticksToKeepLedOn = MIN_TICKS_TO_KEEP_LED_ON * ledOutputsLatched[currentLedIndex];
+	uint16_t ticksToKeepLedOn = MIN_TICKS_TO_KEEP_LED_ON * ledOutputsLatched[currentLedIndex] * ledOutputsLatched[currentLedIndex];
 
 	struct PrepareNextLedResult result = {
 		SUCCESS, ledPins[currentLedIndex], ticksToKeepLedOn
