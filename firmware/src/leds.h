@@ -18,12 +18,18 @@ struct LedPins {
 	struct LedCathode cathode;
 };
 
-// RgLed struct holds indices of individual leds in an RG LED package
-// in ledPins, ledOutputs and ledOutputsLatched arrays
+// LedIds are indices of individual leds in RG LED package
+// in ledPins, ledOutputs and ledOutputsLatched arrays.
+typedef uint8_t LedId_t;
+
 struct RgLed {
-	uint8_t red;
-	uint8_t green;
+	LedId_t red;
+	LedId_t green;
 };
+
+// RgLedIds are indices of the RG LED packages (each consists of
+// a red and a green light emitting junctions) in rgLeds array.
+typedef uint8_t RgLedId_t;
 
 enum PrepareNextLedStatus {
 	SUCCESS,

@@ -35,6 +35,33 @@ static const struct LedCathode ledCathodes[] = {
 	{gpioPortF, 5}
 };
 
+static const struct RgLed rgLeds[] = {
+	{1, 0}, {3, 2}, {5, 4}, {7, 6}, {11, 10}, {13, 12}, {15, 14}, {17, 16},
+	{19, 18}, {21, 20}, {23, 22}, {25, 24}, {27, 26}, {29, 28}, {31, 30}, {33, 32},
+	{35, 34}, {37, 36}, {39, 38}, {41, 40}, {43, 42}, {45, 44}, {47, 46}, {49, 48},
+	{50, 51}, {52, 53}, {54, 55}, {56, 57}, {58, 59}, {60, 61}, {62, 63}, {64, 65},
+	{66, 67}, {68, 69}, {70, 71}, {72, 73}, {74, 75}, {76, 77}, {78, 79}, {80, 81},
+	{82, 83}, {84, 85}, {86, 87}, {88, 89}, {90, 91}, {92, 93}, {94, 95}, {96, 97},
+	{9, 8}
+};
+
+static const RgLedId_t horizontalLeds[] = {14, 10, 6, 2, 48, 0, 4, 8, 12};
+
+static const RgLedId_t verticalLeds[] = {13, 9, 5, 1, 48, 3, 7, 11, 15};
+
+static const RgLedId_t topLeftArcLeds[] = {18, 22, 26, 30, 34, 38, 42, 46};
+
+static const RgLedId_t topRightArcLeds[] = {19, 23, 27, 31, 35, 39, 43, 47};
+
+static const RgLedId_t bottomRightArcLeds[] = {16, 20, 24, 28, 32, 36, 40, 44};
+
+static const RgLedId_t bottomLeftArcLeds[] = {17, 21, 25, 29, 33, 37, 41, 45};
+
+static const RgLedId_t allArcLeds[] = {
+	18, 22, 26, 30, 34, 38, 42, 46, 19, 23, 27, 31, 35, 39, 43, 47,
+	16, 20, 24, 28, 32, 36, 40, 44, 17, 21, 25, 29, 33, 37, 41, 45
+};
+
 static const struct LedPins ledPins[LED_COUNT] = {
 	{{gpioPortA, 0}, {gpioPortE, 8}},
 	{{gpioPortA, 1}, {gpioPortE, 8}},
