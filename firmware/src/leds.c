@@ -99,7 +99,7 @@ void switchToNextLed(void) {
 	struct PrepareNextLedResult result = prepareNextLed(true);
 
 	if (result.status == NO_MORE_LEDS) {
-		disableTimerInterrupt();
+		setTimerToWaitTicks(1000 * MIN_TICKS_TO_KEEP_LED_ON);
 	} else if (result.status == SUCCESS) {
 		setTimerToWaitTicks(result.ticksToKeepLedOn);
 		switchOnPreparedLed(result.led);
