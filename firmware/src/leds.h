@@ -36,6 +36,8 @@ struct PrepareNextLedResult {
 	uint16_t ticksToKeepLedOn;
 };
 
+extern uint8_t ledOutputs[];
+
 void initializeLeds(void);
 
 void switchToNextLed(void);
