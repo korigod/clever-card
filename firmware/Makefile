@@ -102,7 +102,7 @@ override LDFLAGS += -Xlinker -Map=$(LST_DIR)/$(PROJECTNAME).map -mcpu=cortex-m3 
 -mthumb -T$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/efm32tg.ld \
  --specs=nano.specs -Wl,--gc-sections
 
-LIBS = -Wl,--start-group -lgcc -lc -lnosys   -Wl,--end-group
+LIBS = -Wl,--start-group -lgcc -lc -lm -lnosys   -Wl,--end-group
 
 INCLUDEPATHS += \
 -I$(SDK_DIR)/platform/CMSIS/Include \

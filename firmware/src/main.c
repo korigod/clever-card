@@ -9,7 +9,7 @@
 #include "led_control.h"
 
 #define LED_CONTROL_PRIORITY 1
-#define LED_CONTROL_STACK_SIZE configMINIMAL_STACK_SIZE
+#define LED_CONTROL_STACK_SIZE 128
 
 static StaticTask_t ledControlTaskControlBlock;
 static StackType_t ledControlTaskStack[LED_CONTROL_STACK_SIZE];
