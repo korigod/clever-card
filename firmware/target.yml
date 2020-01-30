@@ -1,9 +1,18 @@
 :project:
   :auto_link_deep_dependencies: TRUE
 
+:unity:
+  :suite_setup:
+    - setupSWOForPrint();
+
+:test_runner:
+  :includes:
+    - swo.h
+
 :paths:
   :test:
     - +:test/target
+    - -:test/local
   :support:
     - -:test/support/local
     - +:test/support/target
