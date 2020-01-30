@@ -40,4 +40,6 @@ void initializeLeds(void);
 
 void switchToNextLed(void);
 
+void latchLedOutputs(void);
+
 #endif /* LEDS_H_INC */
