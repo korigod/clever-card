@@ -44,4 +44,7 @@ void switchToNextLed(void);
 
 void latchLedOutputs(void);
 
+// It only clears ledOutputs buffer, doesn't affect latched values
+void clearLeds(void);
+
 #endif /* LEDS_H_INC */

@@ -30,10 +30,8 @@ bool ledPinsAreEqual(struct LedPins a, struct LedPins b) {
 
 void initializeLeds(void) {
 	currentLedIndex = INVALID_LED;
-	for (int i = 0; i < LED_COUNT; i++) {
-		ledOutputs[i] = 0;
-		ledOutputsLatched[i] = 0;
-	}
+	clearLeds();
+	latchLedOutputs();
 	initializeTimer();
 	initializeLedDriver();
 	switchOffCathodes();
@@ -44,6 +42,11 @@ void initializeLeds(void) {
 void latchLedOutputs(void) {
 	ASSERT(sizeof(ledOutputs) == sizeof(ledOutputsLatched));
 	memcpy(ledOutputsLatched, ledOutputs, sizeof(ledOutputs));
+}
+
+
+void clearLeds(void) {
+	memset(ledOutputs, 0, sizeof(ledOutputs));
 }
 
 
