@@ -38,10 +38,6 @@ struct PrepareNextLedResult {
 
 void initializeLeds(void);
 
-void latchLedOutputs(void);
-
-struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely);
-
-void switchOnPreparedLed(struct LedPins led);
+void switchToNextLed(void);
 
 #endif /* LEDS_H_INC */

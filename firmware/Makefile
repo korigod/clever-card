@@ -136,8 +136,10 @@ $(FREERTOS_DIR)/Source/queue.c \
 $(FREERTOS_DIR)/Source/list.c \
 $(FREERTOS_DIR)/Source/event_groups.c \
 $(FREERTOS_DIR)/Source/portable/GCC/ARM_CM3/port.c \
+src/timer.c \
 src/leds.c \
-src/led_driver.c
+src/led_driver.c \
+src/main.c
 
 S_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/startup_efm32tg.S
 

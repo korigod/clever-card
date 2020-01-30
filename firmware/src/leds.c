@@ -1,10 +1,12 @@
 #include <string.h>
 
+#include "common.h"
 #include "board.h"
 #include "leds.h"
 #include "led_driver.h"
+#include "timer.h"
 
-#define MIN_TICKS_TO_KEEP_LED_ON 6
+#define MIN_TICKS_TO_KEEP_LED_ON timerMinTicksToWait
 
 const uint8_t INVALID_LED = UINT8_MAX;
 uint8_t currentLedIndex = UINT8_MAX;
@@ -32,6 +34,7 @@ void initializeLeds(void) {
 		ledOutputs[i] = 0;
 		ledOutputsLatched[i] = 0;
 	}
+	initializeTimer();
 	initializeLedDriver();
 	switchOffCathodes();
 }
@@ -39,7 +42,7 @@ void initializeLeds(void) {
 
 // Must be called from a critical section or protected with mutex
 void latchLedOutputs(void) {
-	//ASSERT(sizeof(ledOutputs) == sizeof(ledOutputsLatched));
+	ASSERT(sizeof(ledOutputs) == sizeof(ledOutputsLatched));
 	memcpy(ledOutputsLatched, ledOutputs, sizeof(ledOutputs));
 }
 
@@ -74,6 +77,8 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 		switchOnCathode(ledPins[currentLedIndex].cathode);
 	}
 
+	prepareAnode(ledPins[currentLedIndex].anode);
+
 	uint16_t ticksToKeepLedOn = MIN_TICKS_TO_KEEP_LED_ON * ledOutputsLatched[currentLedIndex] * ledOutputsLatched[currentLedIndex];
 
 	struct PrepareNextLedResult result = {
@@ -85,4 +90,18 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 
 void switchOnPreparedLed(struct LedPins led) {
 	switchOnAnode(led.anode);
+}
+
+
+void switchToNextLed(void) {
+	switchOffAnodes();
+
+	struct PrepareNextLedResult result = prepareNextLed(true);
+
+	if (result.status == NO_MORE_LEDS) {
+		disableTimerInterrupt();
+	} else if (result.status == SUCCESS) {
+		setTimerToWaitTicks(result.ticksToKeepLedOn);
+		switchOnPreparedLed(result.led);
+	}
 }

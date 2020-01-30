@@ -7,22 +7,32 @@
 #include "test_common.h"
 #include "board.h"
 #include "leds.h"
+#include "timer.h"
+
+#ifdef TEST_TARGET
+	#include "em_timer.h"
+#else
+	#include "mock_em_timer.h"
+	FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool);
+#endif
 
 TEST_FILE("led_driver.c")
+TEST_FILE("timer.c")
 
-#ifndef TEST_TARGET
-	FAKE_VOID_FUNC2(CMU_ClockEnable, int, bool)
-#endif
 
 extern uint8_t currentLedIndex;
 extern const uint8_t INVALID_LED;
 extern uint8_t ledOutputsLatched[LED_COUNT];
 extern uint8_t ledOutputs[LED_COUNT];
 extern bool ledPinsAreEqual(struct LedPins a, struct LedPins b);
+extern void latchLedOutputs(void);
+extern struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely);
 
 
+#ifndef TEST_TARGET
 GPIO_TypeDef gpio;
 GPIO_TypeDef *gpioBase = &gpio;
+#endif
 
 
 void setAllLedOutputs(uint8_t output_value) {

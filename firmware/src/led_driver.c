@@ -19,8 +19,12 @@ void disableLeds(void) {
 }
 
 
+void prepareAnode(struct LedAnode anode) {
+	GPIO_PinModeSet(anode.port, anode.id, gpioModePushPullDrive, 0);
+}
+
 void switchOnAnode(struct LedAnode anode) {
-	GPIO_PinModeSet(anode.port, anode.id, gpioModePushPullDrive, 1);
+	GPIO->P[anode.port].DOUTSET = 1 << anode.id;
 }
 
 void switchOffAnodes(void) {
