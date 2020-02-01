@@ -19,8 +19,8 @@ void traverseLedsInArray(
 	TickType_t *const previousWakeTimePtr,
 	const uint32_t millisecondsToKeepEachLedOn
 ) {
-	for (int i = 0; i < arraySize; i++) {
-		int index = i;
+	for (size_t i = 0; i < arraySize; i++) {
+		size_t index = i;
 		if (reverseTraverseDirection) {
 			index = arraySize - i - 1;
 		}
@@ -51,7 +51,7 @@ void smoothlyTraverseLedsInArray(
 			currentLedId = (arraySize - 1) - currentLedId;
 		}
 
-		for (int i = 0; i < arraySize; i++) {
+		for (size_t i = 0; i < arraySize; i++) {
 			ledOutputs[rgLeds[arrayToTraverse[i]].red] = 5 * fmaxf(2 - fabsf(i - currentLedId), 0);
 		}
 
@@ -77,7 +77,7 @@ void smoothlyTraverseLedsInArrayOfArrays(
 	const uint32_t millisecondsToKeepEachLedOn
 ) {
 	size_t totalLedCount = 0;
-	for (int i = 0; i < arrayCount; i++) {
+	for (size_t i = 0; i < arrayCount; i++) {
 		if (traverseArraysInSeries) {
 			totalLedCount += arrayOfArraysToTraverse[i].arraySize;
 		} else {
@@ -100,16 +100,16 @@ void smoothlyTraverseLedsInArrayOfArrays(
 		}
 
 		int ledsBehind = 0;
-		for (int arrayIndex = 0; arrayIndex < arrayCount; arrayIndex++) {
+		for (size_t arrayIndex = 0; arrayIndex < arrayCount; arrayIndex++) {
 			const struct RgLedArray ledArray = arrayOfArraysToTraverse[arrayIndex];
 
-			for (int i = 0; i < ledArray.arraySize; i++) {
-				int index = i;
+			for (size_t i = 0; i < ledArray.arraySize; i++) {
+				size_t index = i;
 				if (ledArray.reverse) {
 					index = ledArray.arraySize - i - 1;
 				}
 
-				int indexInWholeSequence;
+				size_t indexInWholeSequence;
 				if (traverseArraysInSeries) {
 					indexInWholeSequence = index + ledsBehind;
 				} else {
