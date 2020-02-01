@@ -13,8 +13,9 @@
 
 :paths:
   :test:
-    - +:test/target
     - -:test/local
+    - +:test/hardware
+    - +:test/target
   :support:
     - -:test/support/local
     - +:test/support/target

@@ -25,9 +25,8 @@
 
 :paths:
   :test:
-    - test/**
-    - -:test/target
-    - -:test/support/**
+    - test
+    - test/local
   :source:
     - src
     - vendor/fake_function_framework
