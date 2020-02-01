@@ -4,9 +4,11 @@
 :unity:
   :suite_setup:
     - setupSWOForPrint();
+    - if (additionalSuiteSetUp) additionalSuiteSetUp();
 
 :test_runner:
   :includes:
+    - test_common.h
     - swo.h
 
 :paths:
