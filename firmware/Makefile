@@ -93,7 +93,8 @@ override CXXFLAGS += -D$(DEVICE) -Wall -Wextra -mcpu=cortex-m3 -mthumb \
 -ffunction-sections -fdata-sections -fomit-frame-pointer -DGCC_ARMCM3 -DDEBUG_EFM \
 $(DEPFLAGS)
 
-override ASMFLAGS += -x assembler-with-cpp -D$(DEVICE) -Wall -Wextra -mcpu=cortex-m3 -mthumb -DGCC_ARMCM3 -DDEBUG_EFM  $(DEPFLAGS)
+override ASMFLAGS += -x assembler-with-cpp -D$(DEVICE) -Wall -Wextra -mcpu=cortex-m3 \
+-mthumb -DGCC_ARMCM3 -DDEBUG_EFM  $(DEPFLAGS)
 
 #
 # NOTE: The -Wl,--gc-sections flag may interfere with debugging using gdb.
