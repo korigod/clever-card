@@ -39,7 +39,7 @@ void disableTimerInterrupt(void) {
 }
 
 
-void setTimerToWaitTicks(uint16_t ticks) {
+void setTimerToWaitTicks(const uint16_t ticks) {
 	ASSERT(ticks >= (10 / TIMER1_PRESCALER_VALUE + 2));
 	uint16_t switchOffTime = (uint16_t)TIMER_CounterGet(TIMER1) + ticks;
 	TIMER_CompareSet(TIMER1, 0, switchOffTime);

@@ -15,15 +15,15 @@ uint8_t ledOutputsLatched[LED_COUNT] = {0};
 uint8_t ledOutputs[LED_COUNT] = {0};
 
 
-bool anodesAreEqual(struct LedAnode a, struct LedAnode b) {
+bool anodesAreEqual(const struct LedAnode a, const struct LedAnode b) {
 	return (a.id == b.id) && (a.port == b.port);
 }
 
-bool cathodesAreEqual(struct LedCathode a, struct LedCathode b) {
+bool cathodesAreEqual(const struct LedCathode a, const struct LedCathode b) {
 	return (a.id == b.id) && (a.port == b.port);
 }
 
-bool ledPinsAreEqual(struct LedPins a, struct LedPins b) {
+bool ledPinsAreEqual(const struct LedPins a, const struct LedPins b) {
 	return (anodesAreEqual(a.anode, b.anode)) && (cathodesAreEqual(a.cathode, b.cathode));
 }
 
@@ -88,7 +88,7 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 }
 
 
-void switchOnPreparedLed(struct LedPins led) {
+void switchOnPreparedLed(const struct LedPins led) {
 	switchOnAnode(led.anode);
 }
 
@@ -96,7 +96,7 @@ void switchOnPreparedLed(struct LedPins led) {
 void switchToNextLed(void) {
 	switchOffAnodes();
 
-	struct PrepareNextLedResult result = prepareNextLed(true);
+	const struct PrepareNextLedResult result = prepareNextLed(true);
 
 	if (result.status == NO_MORE_LEDS) {
 		setTimerToWaitTicks(1000 * MIN_TICKS_TO_KEEP_LED_ON);
