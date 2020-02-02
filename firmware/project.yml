@@ -10,6 +10,9 @@
   :default_tasks:
     - test:all
 
+:unity:
+  :use_param_tests: TRUE
+
 :cmock:
   :mock_prefix: mock_
   :when_no_prototypes: :warn
@@ -51,6 +54,7 @@
     - *common_defines
   :test_preprocess:
     - *common_defines
+    - TEST_PREPROCESS
 
 :flags:
   :test:

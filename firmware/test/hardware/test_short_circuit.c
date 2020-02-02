@@ -57,48 +57,63 @@ void tearDown(void) {
 }
 
 
-void test_ledAnodes(void) {
+TEST_VALUE(0)
+TEST_VALUE(1)
+TEST_VALUE(2)
+TEST_VALUE(3)
+TEST_VALUE(4)
+TEST_VALUE(5)
+TEST_VALUE(6)
+TEST_VALUE(7)
+void test_ledAnodes(uint16_t anodeIndex) {
 	const char messageTemplate[] = "Short circuit: anodes %u (port %u, pin %u) and %u (port %u, pin %u).";
 
-	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
-		configureAllAnodesAsInputs(PULL_DOWN);
-		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPullDrive, 1);
-		for (uint8_t j = 0; j < sizeof(ledAnodes) / sizeof(ledAnodes[0]); j++) {
-			if (j != i) {
-				const unsigned int pinInput = GPIO_PinInGet(ledAnodes[j].port, ledAnodes[j].id);
-				if (pinInput != 0) {
-					char message[sizeof(messageTemplate)];
-					snprintf(
-						message, sizeof(messageTemplate), messageTemplate,
-						i, ledAnodes[i].port, ledAnodes[i].id,
-						j, ledAnodes[j].port, ledAnodes[j].id
-					);
-					TEST_FAIL_MESSAGE(message);
-				}
+	configureAllAnodesAsInputs(PULL_DOWN);
+	GPIO_PinModeSet(ledAnodes[anodeIndex].port, ledAnodes[anodeIndex].id, gpioModePushPullDrive, 1);
+	for (uint16_t i = anodeIndex + 1; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
+		if (i != anodeIndex) {
+			const unsigned int pinInput = GPIO_PinInGet(ledAnodes[i].port, ledAnodes[i].id);
+			if (pinInput != 0) {
+				char message[sizeof(messageTemplate)];
+				snprintf(
+					message, sizeof(messageTemplate), messageTemplate,
+					anodeIndex, ledAnodes[anodeIndex].port, ledAnodes[anodeIndex].id,
+					i, ledAnodes[i].port, ledAnodes[i].id
+				);
+				TEST_FAIL_MESSAGE(message);
 			}
 		}
 	}
 }
 
 
-void test_ledCathodes(void) {
+TEST_VALUE(0)
+TEST_VALUE(1)
+TEST_VALUE(2)
+TEST_VALUE(3)
+TEST_VALUE(4)
+TEST_VALUE(5)
+TEST_VALUE(6)
+TEST_VALUE(7)
+TEST_VALUE(8)
+TEST_VALUE(9)
+TEST_VALUE(10)
+void test_ledCathodes(uint16_t cathodeIndex) {
 	const char messageTemplate[] = "Short circuit: cathodes %u (port %u, pin %u) and %u (port %u, pin %u).";
 
-	for (uint8_t i = 0; i < sizeof(ledCathodes) / sizeof(ledCathodes[0]); i++) {
-		configureAllCathodesAsInputs(PULL_DOWN);
-		GPIO_PinModeSet(ledCathodes[i].port, ledCathodes[i].id, gpioModePushPullDrive, 1);
-		for (uint8_t j = 0; j < sizeof(ledCathodes) / sizeof(ledCathodes[0]); j++) {
-			if (j != i) {
-				const unsigned int pinInput = GPIO_PinInGet(ledCathodes[j].port, ledCathodes[j].id);
-				if (pinInput != 0) {
-					char message[sizeof(messageTemplate)];
-					snprintf(
-						message, sizeof(messageTemplate), messageTemplate,
-						i, ledCathodes[i].port, ledCathodes[i].id,
-						j, ledCathodes[j].port, ledCathodes[j].id
-					);
-					TEST_FAIL_MESSAGE(message);
-				}
+	configureAllCathodesAsInputs(PULL_DOWN);
+	GPIO_PinModeSet(ledCathodes[cathodeIndex].port, ledCathodes[cathodeIndex].id, gpioModePushPullDrive, 1);
+	for (uint16_t i = cathodeIndex + 1; i < sizeof(ledCathodes) / sizeof(ledCathodes[0]); i++) {
+		if (i != cathodeIndex) {
+			const unsigned int pinInput = GPIO_PinInGet(ledCathodes[i].port, ledCathodes[i].id);
+			if (pinInput != 0) {
+				char message[sizeof(messageTemplate)];
+				snprintf(
+					message, sizeof(messageTemplate), messageTemplate,
+					cathodeIndex, ledCathodes[cathodeIndex].port, ledCathodes[cathodeIndex].id,
+					i, ledCathodes[i].port, ledCathodes[i].id
+				);
+				TEST_FAIL_MESSAGE(message);
 			}
 		}
 	}
