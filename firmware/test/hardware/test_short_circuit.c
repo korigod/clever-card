@@ -58,18 +58,23 @@ void tearDown(void) {
 
 
 void test_ledAnodes(void) {
+	const char messageTemplate[] = "Short circuit: anodes %u (port %u, pin %u) and %u (port %u, pin %u).";
+
 	for (uint8_t i = 0; i < sizeof(ledAnodes) / sizeof(ledAnodes[0]); i++) {
 		configureAllAnodesAsInputs(PULL_DOWN);
 		GPIO_PinModeSet(ledAnodes[i].port, ledAnodes[i].id, gpioModePushPullDrive, 1);
 		for (uint8_t j = 0; j < sizeof(ledAnodes) / sizeof(ledAnodes[0]); j++) {
 			if (j != i) {
 				const unsigned int pinInput = GPIO_PinInGet(ledAnodes[j].port, ledAnodes[j].id);
-				char message[72];
-				snprintf(
-					message, 72, "Short circuit: anodes %u (port %u, pin %u) and %u (port %u, pin %u)",
-					i, ledAnodes[i].port, ledAnodes[i].id, j, ledAnodes[j].port, ledAnodes[j].id
-				);
-				TEST_ASSERT_EQUAL_UINT32_MESSAGE(0, pinInput, message);
+				if (pinInput != 0) {
+					char message[sizeof(messageTemplate)];
+					snprintf(
+						message, sizeof(messageTemplate), messageTemplate,
+						i, ledAnodes[i].port, ledAnodes[i].id,
+						j, ledAnodes[j].port, ledAnodes[j].id
+					);
+					TEST_FAIL_MESSAGE(message);
+				}
 			}
 		}
 	}
@@ -77,18 +82,23 @@ void test_ledAnodes(void) {
 
 
 void test_ledCathodes(void) {
+	const char messageTemplate[] = "Short circuit: cathodes %u (port %u, pin %u) and %u (port %u, pin %u).";
+
 	for (uint8_t i = 0; i < sizeof(ledCathodes) / sizeof(ledCathodes[0]); i++) {
 		configureAllCathodesAsInputs(PULL_DOWN);
 		GPIO_PinModeSet(ledCathodes[i].port, ledCathodes[i].id, gpioModePushPullDrive, 1);
 		for (uint8_t j = 0; j < sizeof(ledCathodes) / sizeof(ledCathodes[0]); j++) {
 			if (j != i) {
 				const unsigned int pinInput = GPIO_PinInGet(ledCathodes[j].port, ledCathodes[j].id);
-				char message[72];
-				snprintf(
-					message, 72, "Short circuit: cathodes %u (port %u, pin %u) and %u (port %u, pin %u)",
-					i, ledCathodes[i].port, ledCathodes[i].id, j, ledCathodes[j].port, ledCathodes[j].id
-				);
-				TEST_ASSERT_EQUAL_UINT32_MESSAGE(0, pinInput, message);
+				if (pinInput != 0) {
+					char message[sizeof(messageTemplate)];
+					snprintf(
+						message, sizeof(messageTemplate), messageTemplate,
+						i, ledCathodes[i].port, ledCathodes[i].id,
+						j, ledCathodes[j].port, ledCathodes[j].id
+					);
+					TEST_FAIL_MESSAGE(message);
+				}
 			}
 		}
 	}
