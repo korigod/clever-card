@@ -4,12 +4,15 @@
 :unity:
   :suite_setup:
     - setupSWOForPrint();
+    - SysTick_Config(CMU_ClockFreqGet(cmuClock_CORE) / 1000);
     - if (additionalSuiteSetUp) additionalSuiteSetUp();
 
 :test_runner:
   :includes:
     - test_common.h
     - swo.h
+    - ms_timer.h
+    - em_cmu.h
 
 :paths:
   :test:
@@ -27,7 +30,9 @@
 :defines:
   :common: &common_defines
     - TEST_TARGET
-
+    - "'UNITY_EXEC_TIME_START() { extern void unityExecTimeStart(void); unityExecTimeStart(); _Pragma(\"GCC diagnostic ignored \\\"-Wunused-value\\\"\"); }'"
+    - "'UNITY_EXEC_TIME_STOP() { extern void unityExecTimeStop(void); unityExecTimeStop(); _Pragma(\"GCC diagnostic ignored \\\"-Wunused-value\\\"\"); }'"
+    - "'UNITY_PRINT_EXEC_TIME() { extern void unityPrintExecTime(void); unityPrintExecTime(); _Pragma(\"GCC diagnostic ignored \\\"-Wunused-value\\\"\"); }'"
   :test:
     - *common_defines
   :test_preprocess:
