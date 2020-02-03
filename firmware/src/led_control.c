@@ -89,8 +89,16 @@ void smoothlyTraverseLedsInArrayOfArrays(
 		totalLedCount += 2 * traverseZoneRadius;
 	}
 
+	#pragma GCC diagnostic ignored "-Wunused-variable"
+	const TickType_t ticksBetweenLedUpdates = pdMS_TO_TICKS(1000 / LED_FPS);
+	#pragma GCC diagnostic pop
+
 	for (uint32_t frame = 0; frame <= (totalLedCount - 1) * millisecondsToKeepEachLedOn * LED_FPS / 1000; frame++) {
-		vTaskDelayUntil(previousWakeTimePtr, pdMS_TO_TICKS(1000 / LED_FPS));
+		// Assert that led updates take no more than 1/4 of time, necessary to keep up with defined FPS
+		ASSERT_DEBUG(xTaskGetTickCount() - *previousWakeTimePtr < ticksBetweenLedUpdates / 2);
+		ASSERT_RELEASE(xTaskGetTickCount() - *previousWakeTimePtr < ticksBetweenLedUpdates / 4);
+
+		vTaskDelayUntil(previousWakeTimePtr, ticksBetweenLedUpdates);
 
 		clearLeds();
 
