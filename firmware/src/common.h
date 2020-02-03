@@ -16,14 +16,30 @@
 })
 
 
-#ifdef TEST
-	#ifdef TEST_TARGET
-		#define ASSERT(x) EFM_ASSERT(x)
-	#else
-		#define ASSERT(x) ((x) ? ((void)0) : printf("Assertion failed!"))
-	#endif
-#else
+#ifdef PRODUCTION
 	#define ASSERT(x) ((void)0)
+#else
+	#ifdef TEST
+		#define ASSERT(x) if ((x) == 0) { printf("\nASSERTION FAILED!\n"); for ( ;; ); }
+	#else
+		#ifdef configASSERT
+			#define ASSERT(x) configASSERT(x)
+		#else
+			#define ASSERT(x) if ((x) == 0) { for ( ;; ); }
+		#endif
+	#endif
+#endif
+
+#ifdef DEBUG
+	#define ASSERT_DEBUG(x) ASSERT(x)
+#else
+	#define ASSERT_DEBUG(x) ((void)0)
+#endif
+
+#ifdef NDEBUG
+	#define ASSERT_RELEASE(x) ASSERT(x)
+#else
+	#define ASSERT_RELEASE(x) ((void)0)
 #endif
 
 
