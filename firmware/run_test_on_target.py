@@ -31,7 +31,7 @@ jlink.swo_flush()
 jlink.restart()
 
 data_str = ''
-while 'OK' not in data_str and 'FAIL' not in data_str:
+while '\nOK' not in data_str and '\nFAIL' not in data_str:
     num_bytes = jlink.swo_num_bytes()
     if num_bytes == 0:
         time.sleep(0.1)
