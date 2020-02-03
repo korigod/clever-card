@@ -49,7 +49,7 @@
       - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR   #expands to -I search paths
       - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
       - -DEFM32TG232F32
-      - -DDEBUG -O0 -g3
+      - -DNDEBUG -O3 -g3
       - -Wall -Wextra -Werror=implicit-function-declaration -pedantic -mcpu=cortex-m3 -mthumb -mfix-cortex-m3-ldrd -ffunction-sections -fdata-sections -fomit-frame-pointer -std=c99 -DGCC_ARMCM3 -DDEBUG_EFM #// --specs=nano.specs
   :test_assembly:
     :executable: "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/arm-none-eabi-gcc"
