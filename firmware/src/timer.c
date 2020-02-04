@@ -8,9 +8,11 @@
 #ifdef DEBUG
 	const uint16_t timerMinTicksToWait = 110 / TIMER1_PRESCALER_VALUE + 2;
 	const uint16_t timerMinTicksActuallyWait = 260 / TIMER1_PRESCALER_VALUE + 2;
+	const uint16_t timerWaitingTicksOverhead = 260 / TIMER1_PRESCALER_VALUE - 110 / TIMER1_PRESCALER_VALUE;
 #else
 	const uint16_t timerMinTicksToWait = 20 / TIMER1_PRESCALER_VALUE + 1;
 	const uint16_t timerMinTicksActuallyWait = 90 / TIMER1_PRESCALER_VALUE + 2;
+	const uint16_t timerWaitingTicksOverhead = 90 / TIMER1_PRESCALER_VALUE - 20 / TIMER1_PRESCALER_VALUE + 1;
 #endif
 
 
@@ -55,6 +57,7 @@ void setTimerToWaitTicks(const uint16_t ticks) {
 
 void initializeTimer(void) {
 	CMU_ClockEnable(cmuClock_TIMER1, true);
+
 	NVIC_EnableIRQ(TIMER1_IRQn);
 
 	TIMER_InitCC_TypeDef timerCCInit = {
