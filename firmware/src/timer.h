@@ -4,6 +4,8 @@
 #define TIMER1_PRESCALER timerPrescale16
 #define TIMER1_PRESCALER_VALUE (1 << TIMER1_PRESCALER)
 
+const uint16_t timerMinTicksActuallyWait;
+
 const uint16_t timerMinTicksToWait;
 
 void initializeTimer(void);

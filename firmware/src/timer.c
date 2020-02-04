@@ -7,8 +7,10 @@
 
 #ifdef DEBUG
 	const uint16_t timerMinTicksToWait = 110 / TIMER1_PRESCALER_VALUE + 2;
+	const uint16_t timerMinTicksActuallyWait = 260 / TIMER1_PRESCALER_VALUE + 2;
 #else
 	const uint16_t timerMinTicksToWait = 20 / TIMER1_PRESCALER_VALUE + 1;
+	const uint16_t timerMinTicksActuallyWait = 90 / TIMER1_PRESCALER_VALUE + 2;
 #endif
 
 
