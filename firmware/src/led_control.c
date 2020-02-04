@@ -130,8 +130,8 @@ void smoothlyTraverseLedsInArrayOfArrays(
 				const float redBrightness = brightness * fabsf((float)i - middleIndex) / middleIndex;
 				const float greenBrightness = brightness - redBrightness;
 				const RgLedId_t rgLedIndex = ledArray.arrayPtr[i];
-				ledOutputs[rgLeds[rgLedIndex].red] += (uint8_t)(redBrightness * 10.0f);
-				ledOutputs[rgLeds[rgLedIndex].green] += (uint8_t)(greenBrightness * 10.0f);
+				ledOutputs[rgLeds[rgLedIndex].red] += (uint8_t)(redBrightness * 4.0f);
+				ledOutputs[rgLeds[rgLedIndex].green] += (uint8_t)(greenBrightness * 4.0f);
 			}
 			ledsBehind += ledArray.arraySize;
 		}

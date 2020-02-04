@@ -79,7 +79,8 @@ struct PrepareNextLedResult prepareNextLed(bool loopIndefinitely) {
 
 	prepareAnode(ledPins[currentLedIndex].anode);
 
-	uint16_t ticksToKeepLedOn = MIN_TICKS_TO_KEEP_LED_ON * ledOutputsLatched[currentLedIndex] * ledOutputsLatched[currentLedIndex];
+	const uint16_t ledLuminance = ledOutputsLatched[currentLedIndex] * ledOutputsLatched[currentLedIndex];
+	const uint16_t ticksToKeepLedOn = min(64000, timerMinTicksActuallyWait * ledLuminance - timerWaitingTicksOverhead);
 
 	struct PrepareNextLedResult result = {
 		SUCCESS, ledPins[currentLedIndex], ticksToKeepLedOn
@@ -96,10 +97,10 @@ void switchOnPreparedLed(const struct LedPins led) {
 void switchToNextLed(void) {
 	switchOffAnodes();
 
-	const struct PrepareNextLedResult result = prepareNextLed(true);
+	const struct PrepareNextLedResult result = prepareNextLed(false);
 
 	if (result.status == NO_MORE_LEDS) {
-		setTimerToWaitTicks(1000 * MIN_TICKS_TO_KEEP_LED_ON);
+		setTimerToWaitTicks(2000);
 	} else if (result.status == SUCCESS) {
 		setTimerToWaitTicks(result.ticksToKeepLedOn);
 		switchOnPreparedLed(result.led);
