@@ -3,12 +3,16 @@
 
 #include "common.h"
 #include "timer.h"
-#include "led_driver.h"
+
+
+#ifdef DEBUG
+	const uint16_t timerMinTicksToWait = 110 / TIMER1_PRESCALER_VALUE + 2;
+#else
+	const uint16_t timerMinTicksToWait = 20 / TIMER1_PRESCALER_VALUE + 1;
+#endif
 
 
 void (*timerCallback)(void) = 0;
-
-const uint16_t timerMinTicksToWait = (10 / TIMER1_PRESCALER_VALUE + 2);
 
 
 void TIMER1_IRQHandler(void) {
@@ -40,8 +44,9 @@ void disableTimerInterrupt(void) {
 
 
 void setTimerToWaitTicks(const uint16_t ticks) {
-	ASSERT(ticks >= (10 / TIMER1_PRESCALER_VALUE + 2));
-	uint16_t switchOffTime = (uint16_t)TIMER_CounterGet(TIMER1) + ticks;
+	// Performance of this function is critical, so we disable the assertion in -O3 builds
+	ASSERT_DEBUG(ticks >= timerMinTicksToWait);
+	const uint16_t switchOffTime = (uint16_t)TIMER_CounterGet(TIMER1) + ticks;
 	TIMER_CompareSet(TIMER1, 0, switchOffTime);
 }
 

@@ -1,10 +1,10 @@
 #ifndef TIMER_H_INC
 #define TIMER_H_INC
 
-#define TIMER1_PRESCALER timerPrescale1
+#define TIMER1_PRESCALER timerPrescale16
 #define TIMER1_PRESCALER_VALUE (1 << TIMER1_PRESCALER)
 
-extern const uint16_t timerMinTicksToWait;
+const uint16_t timerMinTicksToWait;
 
 void initializeTimer(void);
 
