@@ -185,7 +185,7 @@ debug:    CFLAGS += -DDEBUG -O0 -g3 '-DEFM32TG232F32=1' -fstack-usage \
                     -Wno-unused-variable -Wno-unused-parameter
 debug:    $(EXE_DIR)/$(PROJECTNAME).bin
 
-release:  CFLAGS += -DNDEBUG -O3 -g3 '-DEFM32TG232F32=1'
+release:  CFLAGS += -DNDEBUG -O3 -g3 '-DEFM32TG232F32=1' -fstack-usage
 release:  $(EXE_DIR)/$(PROJECTNAME).bin
 
 # Create objects from C SRC files
