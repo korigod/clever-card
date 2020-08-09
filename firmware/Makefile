@@ -3,7 +3,7 @@
 ####################################################################
 
 .SUFFIXES:				# ignore builtin rules
-.PHONY: all debug release clean
+.PHONY: efm32lg232_debug efm32lg232_release efm32tg232_debug efm32tg232_release clean
 
 ####################################################################
 # Definitions                                                      #
@@ -13,26 +13,40 @@
 uniq = $(strip $(if $1,$(firstword $1) \
        $(call uniq,$(filter-out $(firstword $1),$1))))
 
-DEVICE = EFM32TG232F32
 PROJECTNAME = card
 
-ifneq ($(filter $(MAKECMDGOALS),release),)
-  OBJ_DIR = build/Release/build
-  EXE_DIR = build/Release/exe
-  LST_DIR = build/Release/lst
-else
-  OBJ_DIR = build/Debug/build
-  EXE_DIR = build/Debug/exe
-  LST_DIR = build/Debug/lst
+ifeq (efm32lg232_debug,$(MAKECMDGOALS))
+  BUILD_DIR = build/efm32lg232/debug
+  CFLAGS += $(CDEBUGFLAGS)
+  DEVICE = EFM32LG232F256
 endif
 
+ifeq (efm32lg232_release,$(MAKECMDGOALS))
+  BUILD_DIR = build/efm32lg232/release
+  CFLAGS += $(CRELEASEFLAGS)
+  DEVICE = EFM32LG232F256
+endif
+
+ifeq (efm32tg232_debug,$(MAKECMDGOALS))
+  BUILD_DIR = build/efm32tg232/debug
+  CFLAGS += $(CDEBUGFLAGS)
+  DEVICE = EFM32TG232F32
+endif
+
+ifeq (efm32tg232_release,$(MAKECMDGOALS))
+  BUILD_DIR = build/efm32tg232/release
+  CFLAGS += $(CRELEASEFLAGS)
+  DEVICE = EFM32TG232F32
+endif
+
+OBJ_DIR = $(BUILD_DIR)/build
+EXE_DIR = $(BUILD_DIR)/exe
+LST_DIR = $(BUILD_DIR)/lst
+
 ####################################################################
-# Definitions of toolchain.                                        #
-# You might need to do changes to match your system setup          #
+# Definitions of toolchain                                         #
 ####################################################################
 
-# Change path to the tools according to your system configuration
-# DO NOT add trailing whitespace chars, they do matter!
 SIMPLICITY_DIR ?= $(HOME)/Downloads/SimplicityStudio_v4
 FREERTOS_DIR ?= $(HOME)/Downloads/FreeRTOSv10.2.1/FreeRTOS
 TOOLDIR ?= $(SIMPLICITY_DIR)/developer/toolchains/gnu_arm/7.2_2017q4
@@ -52,7 +66,7 @@ ifeq ($(VERBOSE),)
   ECHO = @
 endif
 
-# Create directories and do a clean which is compatible with parallell make
+# Create directories and do a clean which is compatible with parallel make
 $(shell $(MKDIR) $(subst /,$(PATHSEP),$(OBJ_DIR))>$(NULLDEVICE) 2>&1)
 $(shell $(MKDIR) $(subst /,$(PATHSEP),$(EXE_DIR))>$(NULLDEVICE) 2>&1)
 $(shell $(MKDIR) $(subst /,$(PATHSEP),$(LST_DIR))>$(NULLDEVICE) 2>&1)
@@ -88,6 +102,11 @@ override CFLAGS += -D$(DEVICE) -Wall -Wextra -Werror=implicit-function-declarati
 -fdata-sections -fomit-frame-pointer -std=c99 -DGCC_ARMCM3 -DDEBUG_EFM \
 $(DEPFLAGS)
 
+CDEBUGFLAGS = -DDEBUG -O0 -g3 -fstack-usage -Wno-unused-variable \
+              -Wno-unused-parameter
+
+CRELEASEFLAGS = -DNDEBUG -O3 -g3 -fstack-usage
+
 override CXXFLAGS += -D$(DEVICE) -Wall -Wextra -mcpu=cortex-m3 -mthumb \
 -mfix-cortex-m3-ldrd -fno-builtin -fno-rtti -fno-exceptions -std=c++11 \
 -ffunction-sections -fdata-sections -fomit-frame-pointer -DGCC_ARMCM3 -DDEBUG_EFM \
@@ -100,14 +119,12 @@ override ASMFLAGS += -x assembler-with-cpp -D$(DEVICE) -Wall -Wextra -mcpu=corte
 # NOTE: The -Wl,--gc-sections flag may interfere with debugging using gdb.
 #
 override LDFLAGS += -Xlinker -Map=$(LST_DIR)/$(PROJECTNAME).map -mcpu=cortex-m3 \
--mthumb -T$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/efm32tg.ld \
- --specs=nano.specs -Wl,--gc-sections
+-mthumb --specs=nano.specs -Wl,--gc-sections
 
 LIBS = -Wl,--start-group -lgcc -lc -lm -lnosys   -Wl,--end-group
 
 INCLUDEPATHS += \
 -I$(SDK_DIR)/platform/CMSIS/Include \
--I$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Include \
 -I$(SDK_DIR)/platform/emlib/inc \
 -I$(FREERTOS_DIR)/Source/include \
 -I$(FREERTOS_DIR)/Source/portable/GCC/ARM_CM3 \
@@ -119,7 +136,6 @@ INCLUDEPATHS += \
 ####################################################################
 
 C_CXX_SRC += \
-$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/system_efm32tg.c \
 $(SDK_DIR)/hardware/kit/common/drivers/retargetio.c \
 $(SDK_DIR)/platform/emlib/src/em_assert.c \
 $(SDK_DIR)/platform/emlib/src/em_cmu.c \
@@ -145,7 +161,19 @@ src/main.c \
 src/static_alloc.c \
 src/timer.c
 
-S_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/startup_efm32tg.S
+ifeq ($(DEVICE),EFM32LG232F256)
+  INCLUDEPATHS += -I$(SDK_DIR)/platform/Device/SiliconLabs/EFM32LG/Include
+  override LDFLAGS += -T$(SDK_DIR)/platform/Device/SiliconLabs/EFM32LG/Source/GCC/efm32lg.ld
+  C_CXX_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32LG/Source/system_efm32lg.c
+  S_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32LG/Source/GCC/startup_efm32lg.S
+endif
+
+ifeq ($(DEVICE),EFM32TG232F32)
+  INCLUDEPATHS += -I$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Include
+  override LDFLAGS += -T$(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/efm32tg.ld
+  C_CXX_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/system_efm32tg.c
+  S_SRC += $(SDK_DIR)/platform/Device/SiliconLabs/EFM32TG/Source/GCC/startup_efm32tg.S
+endif
 
 C_SRC = $(filter %.c, $(C_CXX_SRC))
 CXX_SRC = $(filter %.cpp, $(C_CXX_SRC))
@@ -178,15 +206,10 @@ vpath %.cpp $(CXX_PATHS)
 vpath %.s $(S_PATHS)
 vpath %.S $(S_PATHS)
 
-# Default build is debug build
-all:      debug
-
-debug:    CFLAGS += -DDEBUG -O0 -g3 '-DEFM32TG232F32=1' -fstack-usage \
-                    -Wno-unused-variable -Wno-unused-parameter
-debug:    $(EXE_DIR)/$(PROJECTNAME).bin
-
-release:  CFLAGS += -DNDEBUG -O3 -g3 '-DEFM32TG232F32=1' -fstack-usage
-release:  $(EXE_DIR)/$(PROJECTNAME).bin
+efm32lg232_debug: $(EXE_DIR)/$(PROJECTNAME).bin
+efm32lg232_release: $(EXE_DIR)/$(PROJECTNAME).bin
+efm32tg232_debug: $(EXE_DIR)/$(PROJECTNAME).bin
+efm32tg232_release: $(EXE_DIR)/$(PROJECTNAME).bin
 
 # Create objects from C SRC files
 $(OBJ_DIR)/%.o: %.c
@@ -224,9 +247,7 @@ $(EXE_DIR)/$(PROJECTNAME).bin: $(EXE_DIR)/$(PROJECTNAME).out
 	@echo ' '
 
 clean:
-ifeq ($(filter $(MAKECMDGOALS),all debug release),)
 	$(RMDIRS) build
-endif
 
 # include auto-generated dependency files (explicit rules)
 ifneq (clean,$(findstring clean, $(MAKECMDGOALS)))
