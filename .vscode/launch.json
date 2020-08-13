@@ -2,28 +2,52 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Firmware Debug",
+            "name": "Firmware TG232 Debug",
             "cwd": "${workspaceRoot}/firmware",
-            "executable": "./build/Debug/exe/card.out",
+            "executable": "./build/efm32tg232/debug/exe/card.out",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32TG232F32",
             "svdFile": "EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
-            "preLaunchTask": "make firmware"
+            "preLaunchTask": "make efm32tg232_debug"
         },
         {
-            "name": "Firmware Release",
+            "name": "Firmware LG232 Debug",
             "cwd": "${workspaceRoot}/firmware",
-            "executable": "./build/Release/exe/card.out",
+            "executable": "./build/efm32lg232/debug/exe/card.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32LG232F256",
+            "svdFile": "EFM32LG232F256.svd",
+            // "rtos": "FreeRTOS",
+            "preLaunchTask": "make efm32lg232_debug"
+        },
+        {
+            "name": "Firmware TG232 Release",
+            "cwd": "${workspaceRoot}/firmware",
+            "executable": "./build/efm32tg232/release/exe/card.out",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32TG232F32",
             "svdFile": "EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
-            "preLaunchTask": "make release firmware"
+            "preLaunchTask": "make efm32tg232_release"
+        },
+        {
+            "name": "Firmware LG232 Release",
+            "cwd": "${workspaceRoot}/firmware",
+            "executable": "./build/efm32lg232/release/exe/card.out",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "EFM32LG232F256",
+            "svdFile": "EFM32LG232F256.svd",
+            // "rtos": "FreeRTOS",
+            "preLaunchTask": "make efm32lg232_release"
         },
         {
             "name": "LG990_FreeRTOS-blink Debug",

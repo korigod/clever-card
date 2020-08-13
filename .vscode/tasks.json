@@ -2,9 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "make firmware",
+            "label": "make efm32tg232_debug",
             "type": "shell",
-            "command": "make",
+            "command": "make efm32tg232_debug",
+            "options": {
+                "cwd": "firmware"
+            },
+            "group": "build"
+        },
+        {
+            "label": "make efm32lg232_debug",
+            "type": "shell",
+            "command": "make efm32lg232_debug",
             "options": {
                 "cwd": "firmware"
             },
@@ -14,16 +23,22 @@
             }
         },
         {
-            "label": "make release firmware",
+            "label": "make efm32tg232_release",
             "type": "shell",
-            "command": "make release",
+            "command": "make efm32tg232_release",
             "options": {
                 "cwd": "firmware"
             },
-            "group": {
-                "kind":"build",
-                "isDefault": true
-            }
+            "group": "build"
+        },
+        {
+            "label": "make efm32lg232_release",
+            "type": "shell",
+            "command": "make efm32lg232_release",
+            "options": {
+                "cwd": "firmware"
+            },
+            "group": "build"
         },
         {
             "label": "make LG990_FreeRTOS-blink",
