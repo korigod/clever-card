@@ -48,20 +48,21 @@
       - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE               #expands to -I search paths
       - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR   #expands to -I search paths
       - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
-      - -DEFM32TG232F32
+      # - -DEFM32TG232F32
+      - -DEFM32LG232F256
       - -DNDEBUG -O3 -g3
       - -Wall -Wextra -Werror=implicit-function-declaration -pedantic -mcpu=cortex-m3 -mthumb -mfix-cortex-m3-ldrd -ffunction-sections -fdata-sections -fomit-frame-pointer -std=c99 -DGCC_ARMCM3 -DDEBUG_EFM #// --specs=nano.specs
   :test_assembly:
     :executable: "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/arm-none-eabi-gcc"
     :name: 'arm compiler, used for testing'
     :arguments:
-      - -x assembler-with-cpp -DEFM32TG232F32 -Wall -Wextra -mcpu=cortex-m3 -mthumb -DGCC_ARMCM3 -DDEBUG_EFM
+      - -x assembler-with-cpp -DEFM32LG232F256 -Wall -Wextra -mcpu=cortex-m3 -mthumb -DGCC_ARMCM3 -DDEBUG_EFM
   :test_linker:
     :executable: "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin/arm-none-eabi-gcc"
     :arguments:
-      - "-Xlinker -Map=build/test/out/test.map -mcpu=cortex-m3 -mthumb -T#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32TG/Source/GCC/efm32tg.ld --specs=nano.specs -Wl,--gc-sections"
+      - "-Xlinker -Map=build/test/out/test.map -mcpu=cortex-m3 -mthumb -T#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Source/GCC/efm32lg.ld --specs=nano.specs -Wl,--gc-sections"
       - ${1}
-      - build/Debug/build/startup_efm32tg.o build/Debug/build/system_efm32tg.o
+      - build/efm32lg232/release/build/startup_efm32lg.o build/efm32lg232/release/build/system_efm32lg.o
       - -Wl,--start-group -lgcc -lc -lnosys   -Wl,--end-group
       - -o ${2}
   :test_fixture:
@@ -69,6 +70,7 @@
     :name: 'script to upload to target and receive test results'
     :arguments:
       - "run_test_on_target.py"
+      - "-d EFM32LG232F256"
       - "-f ${1}"
 
 :flags:

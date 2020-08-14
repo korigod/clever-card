@@ -34,8 +34,8 @@
     - src
     - vendor/fake_function_framework
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/CMSIS/Include"
-    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32TG"
-    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32TG/Include"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG"
+    - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/Device/SiliconLabs/EFM32LG/Include"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/inc"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/src"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emdrv/**"
@@ -48,7 +48,8 @@
 
 :defines:
   :common: &common_defines
-    - EFM32TG232F32
+  # - EFM32TG232F32
+    - EFM32LG232F256
     - TEST
   :test:
     - *common_defines
