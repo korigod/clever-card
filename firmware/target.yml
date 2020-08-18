@@ -5,12 +5,19 @@
   :suite_setup:
     - setupSWOForPrint();
     - SysTick_Config(CMU_ClockFreqGet(cmuClock_CORE) / 1000);
+    - disableTestLeds();
     - if (additionalSuiteSetUp) additionalSuiteSetUp();
+
+  :suite_teardown:
+    - if (additionalSuiteTearDown) additionalSuiteTearDown(num_failures);
+    - "(num_failures) ? switchOnRedLed() : switchOnGreenLed();"
+    - return num_failures;
 
 :test_runner:
   :includes:
     - test_common.h
     - swo.h
+    - test_result_leds.h
     - ms_timer.h
     - em_cmu.h
 

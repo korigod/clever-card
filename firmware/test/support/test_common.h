@@ -11,5 +11,7 @@
 
 extern void __attribute__((weak)) additionalSuiteSetUp(void);
 
+extern void __attribute__((weak)) additionalSuiteTearDown(int num_failures);
+
 
 #endif /* TEST_COMMON_H_INC */

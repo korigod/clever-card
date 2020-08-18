@@ -20,18 +20,9 @@ void setUp(void) {
 }
 
 
-int suiteTearDown(int num_failures) {
+void additionalSuiteTearDown(int num_failures) {
 	writeRegister(LSM6DS3_CTRL1_XL, LSM6DS3_ODR_XL_POWER_DOWN);
 	writeRegister(LSM6DS3_CTRL2_G, LSM6DS3_ODR_G_POWER_DOWN);
-
-	GPIO_DriveModeSet(gpioPortA, gpioDriveModeLowest);
-	GPIO_PinModeSet(gpioPortA, 10, gpioModePushPullDrive, 1);
-
-	if (num_failures == 0) {
-		GPIO_PinModeSet(gpioPortE, 8, gpioModeWiredAnd, 0);  // Green LED
-	} else {
-		GPIO_PinModeSet(gpioPortE, 9, gpioModeWiredAnd, 0);  // Red LED
-	}
 }
 
 
