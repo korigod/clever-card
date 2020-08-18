@@ -241,10 +241,10 @@ $(EXE_DIR)/$(PROJECTNAME).bin: $(EXE_DIR)/$(PROJECTNAME).out
 	$(ECHO)$(OBJCOPY) -O binary $(EXE_DIR)/$(PROJECTNAME).out $(EXE_DIR)/$(PROJECTNAME).bin
 
 # Calculate the size
-	@echo '\n'
+	@echo ''
 	@echo 'Running size tool'
 	$(TOOLDIR)/bin/arm-none-eabi-size $(EXE_DIR)/$(PROJECTNAME).out
-	@echo ' '
+	@echo ''
 
 clean:
 	$(RMDIRS) build
