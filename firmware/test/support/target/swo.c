@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "em_chip.h"
 #include "em_device.h"
 
 #define ITM_Port32(n) (*((volatile unsigned int *)(0xE0000000 + 4 * n)))
@@ -13,6 +14,8 @@ int RETARGET_ReadChar(void) {
 }
 
 void setupSWOForPrint(void) {
+	CHIP_Init();
+
 	/* Enable GPIO clock. */
 	CMU->HFPERCLKEN0 |= CMU_HFPERCLKEN0_GPIO;
 
