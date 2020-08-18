@@ -131,7 +131,7 @@ void initIMU(QueueHandle_t imuRawQueueHandle) {
 	initUSART1();
 
 	// Priority 6 of 7 (medium priority of three RTOS-enabled, which are 5–7)
-	NVIC_SetPriority(DMA_IRQn, 0xDF);
+	NVIC_SetPriority(DMA_IRQn, 6);
 
 	DMA_Init_TypeDef init;
 	init.hprot = 0;
