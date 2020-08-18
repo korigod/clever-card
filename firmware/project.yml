@@ -30,6 +30,8 @@
   :test:
     - test
     - test/local
+  :include:
+    - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include"
   :source:
     - src
     - vendor/fake_function_framework
@@ -40,7 +42,6 @@
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emlib/src"
     - "#{Dir.home}/Downloads/SimplicityStudio_v4/developer/sdks/gecko_sdk_suite/v2.6/platform/emdrv/**"
     - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source"
-    - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/include"
     - "#{Dir.home}/Downloads/FreeRTOSv10.2.1/FreeRTOS/Source/portable/GCC/ARM_CM3"
   :support:
     - test/support
