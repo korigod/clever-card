@@ -9,7 +9,7 @@
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32TG232F32",
-            "svdFile": "EFM32TG232F32.svd",
+            "svdFile": "vendor/EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make efm32tg232_debug"
         },
@@ -21,7 +21,7 @@
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32LG232F256",
-            "svdFile": "EFM32LG232F256.svd",
+            "svdFile": "vendor/EFM32LG232F256.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make efm32lg232_debug"
         },
@@ -33,7 +33,7 @@
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32TG232F32",
-            "svdFile": "EFM32TG232F32.svd",
+            "svdFile": "vendor/EFM32TG232F32.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make efm32tg232_release"
         },
@@ -45,7 +45,7 @@
             "type": "cortex-debug",
             "servertype": "jlink",
             "device": "EFM32LG232F256",
-            "svdFile": "EFM32LG232F256.svd",
+            "svdFile": "vendor/EFM32LG232F256.svd",
             // "rtos": "FreeRTOS",
             "preLaunchTask": "make efm32lg232_release"
         },
