@@ -782,7 +782,7 @@
           <description>Channel Enable Set Register</description>
           <addressOffset>0x028</addressOffset>
           <size>32</size>
-          <access>write-only</access>
+          <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <resetMask>0x00000FFF</resetMask>
           <fields>
@@ -791,84 +791,84 @@
               <description>Channel 0 Enable Set</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH1ENS</name>
               <description>Channel 1 Enable Set</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH2ENS</name>
               <description>Channel 2 Enable Set</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH3ENS</name>
               <description>Channel 3 Enable Set</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH4ENS</name>
               <description>Channel 4 Enable Set</description>
               <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH5ENS</name>
               <description>Channel 5 Enable Set</description>
               <bitOffset>5</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH6ENS</name>
               <description>Channel 6 Enable Set</description>
               <bitOffset>6</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH7ENS</name>
               <description>Channel 7 Enable Set</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH8ENS</name>
               <description>Channel 8 Enable Set</description>
               <bitOffset>8</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH9ENS</name>
               <description>Channel 9 Enable Set</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH10ENS</name>
               <description>Channel 10 Enable Set</description>
               <bitOffset>10</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>CH11ENS</name>
               <description>Channel 11 Enable Set</description>
               <bitOffset>11</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>write-only</access>
+              <access>read-write</access>
             </field>
           </fields>
         </register>
