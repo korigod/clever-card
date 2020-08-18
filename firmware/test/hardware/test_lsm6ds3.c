@@ -2,32 +2,17 @@
 #include "em_gpio.h"
 #include "unity.h"
 
-#include "FreeRTOSConfig.h"
-#include "FreeRTOS.h"
-#include "task.h"
-
 #include "test_common.h"
 #include "board.h"
 #include "lsm6ds3.h"
 #include "lsm6ds3_registers.h"
-#include "gpio_irq.h"
 
-TEST_FILE("tasks.c")
-TEST_FILE("timer.c")
-TEST_FILE("port.c")
-TEST_FILE("list.c")
-TEST_FILE("lists.c")
-TEST_FILE("debug_hooks.c")
 
+#define IMU_IRQ_GPIO_PORT gpioPortB
+#define IMU_IRQ_GPIO_PIN 13
 
 #define ACCEL_MAX_ERROR_G 0.025
 #define GYRO_MAX_ERROR_DPS 5.0
-
-
-void additionalSuiteSetUp(void) {
-	// Disable FreeRTOS scheduler in SysTick handler
-	vTaskSuspendAll();
-}
 
 
 void setUp(void) {
