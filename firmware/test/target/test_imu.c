@@ -50,7 +50,7 @@ void test_imuTaskQueriesIMUAndResultIsSane(int axis) {
 		// Mock of the queue send function will copy
 		// the IMU data from the function under test
 		result = *(struct ImuRaw *)resultPtr;
-		return 0;
+		return pdTRUE;
 	}
 	xQueueGenericSend_fake.custom_fake = xQueueGenericSend_customFake;
 
