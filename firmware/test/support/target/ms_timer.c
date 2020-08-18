@@ -7,11 +7,14 @@ uint32_t startTime;
 uint32_t stopTime;
 
 
-void SysTick_Handler(void)
+__attribute__((weak)) void SysTick_Handler(void)
 {
 	msTicks++;
 }
 
+void vApplicationTickHook(void) {
+	msTicks++;
+}
 
 void unityExecTimeStart(void) {
 	startTime = msTicks;

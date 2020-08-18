@@ -16,3 +16,7 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, signed char *pcTaskName) 
 void vApplicationMallocFailedHook(void) {
 	configASSERT(0);
 }
+
+__attribute__((weak)) void vApplicationTickHook(void) {
+	// This hook is redefined when testing on target device
+}
