@@ -155,6 +155,7 @@ $(FREERTOS_DIR)/Source/event_groups.c \
 $(FREERTOS_DIR)/Source/portable/GCC/ARM_CM3/port.c \
 src/debug_hooks.c \
 src/gpio_irq.c \
+src/imu.c \
 src/led_control.c \
 src/led_driver.c \
 src/leds.c \
