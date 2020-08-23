@@ -1,0 +1,1 @@
+These small projects were used to test particular functionality of EFM32 MCUs. LG990 examples aim EFM32LG-STK3600 Starter Kit, while TG232 ones were run on the clever-card prototype with EFM32TG232F32 MCU.
